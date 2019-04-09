@@ -8,8 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "generate-element": "ng build --prod --output-hashing none",
-    "copy-element": "cp ./dist/video-stream/*.js ../cockpit/public/video-stream/"
+    "serve-element": "ng build --prod --output-hashing none --watch",
+    "http-server": "http-server -p 8080 ./dist/video-stream"
   },
   "private": true,
   "dependencies": {
@@ -33,10 +33,11 @@
     "@angular/cli": "~7.3.0",
     "@angular/compiler-cli": "~7.2.0",
     "@angular/language-service": "~7.2.0",
-    "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
+    "http-server": "^0.11.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.1.1",
