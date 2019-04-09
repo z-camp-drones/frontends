@@ -22,11 +22,12 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-{{ checksum "frontends/cockpit/package.json" }}
+            - v1-dependencies-{{ checksum "frontends/video-stream/package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: cd src/cockpit
+      - run: cd frontends/cockpit
       - run: npm install
       - save_cache:
           paths:
