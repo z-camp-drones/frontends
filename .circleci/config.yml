@@ -27,22 +27,20 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: cd frontends/cockpit
-      - run: npm install
+      - run: cd frontends/cockpit && npm install
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-cockpit-{{ checksum "package.json" }}
 
       # run tests!
-      - run: npm run test
+      - run: cd frontends/cockpit && npm run test
 
-      - run: cd ../../src/video-stream
-      - run: npm install
+      - run: cd frontends/video-stream && npm install
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-video-stream-{{ checksum "package.json" }}
 
       # run tests!
-      - run: npm run test
+      - run: cd frontends/video-stream && npm run test
