@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:7.10
+      - image: circleci/node:latest
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -31,7 +31,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-cockpit-{{ checksum "package.json" }}
+          key: v1-dependencies-cockpit-{{ checksum "frontends/cockpit/package.json" }}
 
       # run tests!
       - run: cd frontends/cockpit && npm run test
@@ -40,7 +40,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-video-stream-{{ checksum "package.json" }}
+          key: v1-dependencies-video-stream-{{ checksum "frontends/video-stream/package.json" }}
 
       # run tests!
       - run: cd frontends/video-stream && npm run test
