@@ -14,15 +14,15 @@ This repo contains of 4 different apps:
 
 Follow these steps to start the **Main ReactJS Cockpit App**
 ```
-cd src/cockpit
+cd frontends/cockpit
 npm run start
 ```
 
 For every other app do the following
 ```
 cd src/*frontend-name*
+npm run serve-element
 npm run http-server
-npm run serve
 ```
 
 `npm run http-server` will start a http server, which is sourcing the `./dist/*frontend-name*` folder. To ensure the every frontend can run their own http server, every frontend is using another port. Inside the `./dist` folder is the bundled custom element.
