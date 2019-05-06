@@ -1,26 +1,61 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import 'eventsource-polyfill';
+import TelemetryDto from './telemetry/TelemetryDto';
+import {Telemetry} from './Telemetry';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface IProps {
+
 }
 
-export default App;
+interface IState {
+    droneStatus: TelemetryDto | null;
+    name: string;
+}
+
+export default class App extends Component<IProps, IState> {
+    private eventSource: EventSource;
+
+    constructor(props: IProps) {
+        super(props);
+        this.state = {
+            droneStatus: null,
+            name: "Hello"
+        };
+
+        this.eventSource = new EventSource("http://localhost:3001/data/mocked-events");
+    }
+
+    componentDidMount() {
+        this.eventSource.addEventListener("closedConnection", e =>
+            this.stopUpdates()
+        );
+
+        this.eventSource.onmessage = e =>
+            this.updateDroneState(JSON.parse(e.data));
+    }
+
+    stopUpdates() {
+        this.eventSource.close();
+    }
+
+    render() {
+        return (
+            <div className="App">
+
+                <Telemetry droneStatus={this.state.droneStatus}/>
+            </div>
+        );
+    }
+
+    private updateDroneState(telemetry: TelemetryDto) {
+        this.setState({
+            ...this.state,
+            droneStatus: telemetry
+        });
+
+    }
+}
+
+
+
