@@ -14,13 +14,13 @@ This repo contains of 4 different apps:
 
 Follow these steps to start the **Main ReactJS Cockpit App**
 ```
-cd src/cockpit
+cd frontends/cockpit
 npm run start
 ```
 
 For every other app do the following
 ```
-cd src/*frontend-name*
+cd frontends/*frontend-name*
 npm run http-server
 npm run serve
 ```
