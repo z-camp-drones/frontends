@@ -43,3 +43,7 @@ jobs:
 
       # run tests!
       - run: cd frontends/video-stream && npm run test
+
+      # collect test results
+      - store_test_results:
+          path: 
