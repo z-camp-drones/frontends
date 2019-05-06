@@ -19,6 +19,16 @@ module.exports = function override(config, env) {
     newConfig.optimization.runtimeChunk = false;
     newConfig.output.filename = 'static/js/[name].js';
     newConfig.output.chunkFilename = 'static/js/[name].chunk.js';
-    console.log(newConfig.plugins);
+    // remove hash from css files.
+    for (let plugin in newConfig.plugins) {
+        let p = newConfig.plugins[plugin];
+        if (p.options && p.options.filename && p.options.chunkFilename) {
+            p.options = {
+                ...p.options,
+                filename: 'static/css/[name].css',
+                chunkFilename: 'static/css/[name].chunk.css'
+            };
+        }
+    }
     return newConfig;
 }

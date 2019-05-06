@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Tooltip from './Tooltip';
 import NumberFormat from 'react-number-format';
+import './SingleValueTelemetry.css';
 
 export default class SingleValueTelemetry extends Component<{ value: number, label: string, suffix?: string, description?: string }> {
     render() {
