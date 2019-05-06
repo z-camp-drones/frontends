@@ -42,7 +42,6 @@ export default class App extends Component<IProps, IState> {
     render() {
         return (
             <div className="App">
-
                 <Telemetry droneStatus={this.state.droneStatus}/>
             </div>
         );
