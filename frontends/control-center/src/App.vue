@@ -1,33 +1,31 @@
 <template>
   <div id="app">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <BasicDroneControl></BasicDroneControl>
+    <AdvancedDroneControl></AdvancedDroneControl>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import wrap from '@vue/web-component-wrapper';
-import HelloWorld from './components/HelloWorld.vue';
+import BasicDroneControl from './components/BasicDroneControl.vue';
+import AdvancedDroneControl from './components/AdvancedDroneControl.vue';
 
 @Component({
   components: {
-    HelloWorld,
+    BasicDroneControl,
+    AdvancedDroneControl,
   },
 })
 export default class App extends Vue {}
 
-const CustomElement = wrap(Vue, Component);
+const BasicDroneControlCustomElement = wrap(Vue, BasicDroneControl);
+window.customElements.define('basic-drone-control', BasicDroneControlCustomElement);
 
-window.customElements.define('control-center', CustomElement);
+const AdvancedDroneControlCustomElement = wrap(Vue, AdvancedDroneControl);
+window.customElements.define('advanced-drone-control', AdvancedDroneControlCustomElement);
+
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
