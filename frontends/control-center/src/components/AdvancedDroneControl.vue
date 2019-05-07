@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { ALL_ALLOWED_ADVANCED_KEYS, ALL_ADVANCED_MOVEMENTS, TAKEOFF_LAND } from "./keys";
+import { ALL_ALLOWED_ADVANCED_KEYS, ALL_ADVANCED_MOVEMENTS, TAKEOFF_LAND, EMERGENCY } from "./keys";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faRedo, faUndo, faAngleDoubleUp, faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -67,7 +67,9 @@ export default class AdvancedDroneControl extends Vue {
             this.sendMovementCommand(event.keyCode, 0);
 		} else if (TAKEOFF_LAND.keyCode === event.keyCode) {
             this.droneController.sendTakeOffOrLandCommand();
-        }
+        } else if (EMERGENCY.keyCode === event.keyCode) {
+			this.droneController.sendEmergencyCommand();
+		}
     }
     
     private setControlState(keyCode: number, active: boolean) {

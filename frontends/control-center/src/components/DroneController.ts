@@ -31,4 +31,8 @@ export class DroneController {
 	public sendTakeOffOrLandCommand() {
 		this.socket.emit('takeoff_land', {});
 	}
+
+	public sendEmergencyCommand() {
+		this.socket.emit('emergency', {});
+	}
 }

@@ -99,6 +99,14 @@ export const TAKEOFF_LAND: Movement = {
 	},
 };
 
+export const EMERGENCY: Movement = {
+	key: 'Escape',
+	keyCode: 27,
+	adaptDroneState(state: DroneState, value: number) {
+		return {...state};
+	},
+};
+
 export const ALL_BASIC_MOVEMENTS: Movement[] = [FORWARD, BACK, LEFT, RIGHT];
 
 export const ALL_ALLOWED_BASIC_KEYS: string[] = ALL_BASIC_MOVEMENTS.map(k => k.key);
