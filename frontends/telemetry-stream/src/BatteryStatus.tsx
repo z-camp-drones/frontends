@@ -7,7 +7,8 @@ interface IProps {
 }
 
 interface IState {
-    battery: number;
+    battery: number | null;
+    connectionError: boolean;
 }
 
 
@@ -18,7 +19,8 @@ export class BatteryStatus extends Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            battery: 0
+            battery: 0,
+            connectionError: false
         }
     }
 
@@ -32,11 +34,20 @@ export class BatteryStatus extends Component<IProps, IState> {
             this.eventSource.close();
         }
         if (url) {
-            this.eventSource = new EventSource(`${url}/data/mocked-events`);
-            this.eventSource.addEventListener("closedConnection", () => this.eventSource && this.eventSource.close());
+            try {
+                this.setState({...this.state, connectionError: false, battery: null});
+                this.eventSource = new EventSource(`${url}/data/mocked-events`);
+                this.eventSource.addEventListener("closedConnection", () => this.eventSource && this.eventSource.close());
 
-            this.eventSource.onmessage = (e) => {
-                this.updateDroneState(JSON.parse(e.data));
+                this.eventSource.onmessage = (e) => {
+                    this.updateDroneState(JSON.parse(e.data));
+                };
+                this.eventSource.onerror = (e) => {
+                    this.setState({...this.state, connectionError: true});
+                };
+            }
+            catch (e) {
+                this.setState({...this.state, battery: null, connectionError: true})
             }
         }
     }
@@ -49,14 +60,22 @@ export class BatteryStatus extends Component<IProps, IState> {
     }
 
     render() {
-        return (
-            <div>
-                <SingleValueTelemetry value={this.state.battery} label='Battery' suffix='%'/>
-            </div>
-        );
+        if (this.state.connectionError) {
+            return (<div>Connection not established.</div>)
+        }
+        if (!this.state.battery) {
+            return (<div>No Data yet. Loading...</div>)
+        }
+        if (this.state.battery) {
+            return (
+                <div>
+                    <SingleValueTelemetry value={this.state.battery} label='Battery' suffix='%'/>
+                </div>
+            );
+        }
     }
 
     private updateDroneState(droneStatus: TelemetryDto) {
-        this.setState({...this.state, battery: droneStatus.battery});
+        this.setState({...this.state, battery: droneStatus.battery, connectionError: false});
     }
 }
