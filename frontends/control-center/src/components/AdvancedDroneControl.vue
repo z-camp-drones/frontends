@@ -3,8 +3,8 @@
 		<div class="control-circle">
             <font-awesome-icon class="navigation flight-up" icon="angle-double-up" v-bind:class="{ active: controls['87'] }"/>
 			<div class="middle-row">
-				<font-awesome-icon class="turn-right" icon="redo" v-bind:class="{ active: controls['65'] }"/>
-				<font-awesome-icon class="turn-left" icon="undo" v-bind:class="{ active: controls['68'] }"/>
+				<font-awesome-icon class="turn-right" icon="undo" v-bind:class="{ active: controls['65'] }"/>
+				<font-awesome-icon class="turn-left" icon="redo" v-bind:class="{ active: controls['68'] }"/>
 			</div>
             <font-awesome-icon class="navigation flight-up" icon="angle-double-down" v-bind:class="{ active: controls['83'] }"/>
 		</div>
@@ -13,10 +13,11 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { ALL_ALLOWED_ADVANCED_KEYS } from "./keys";
+import { ALL_ALLOWED_ADVANCED_KEYS, ALL_ADVANCED_MOVEMENTS, TAKEOFF_LAND } from "./keys";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faRedo, faUndo, faAngleDoubleUp, faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { DroneController } from "./DroneController";
 
 interface KeyControls {
 	[key: number]: boolean;
@@ -35,7 +36,13 @@ export default class AdvancedDroneControl extends Vue {
 		68: false,
 		83: false,
 		87: false
-	};
+    };
+    private droneController: DroneController;
+    
+    constructor() {
+        super();
+        this.droneController = new DroneController();
+    }
 
 	public created() {
 		window.addEventListener("keydown", this.handleKeyDownEvent);
@@ -49,15 +56,30 @@ export default class AdvancedDroneControl extends Vue {
 
 	private handleKeyDownEvent(event: KeyboardEvent) {
 		if (ALL_ALLOWED_ADVANCED_KEYS.includes(event.key)) {
-			this.controls[event.keyCode] = true;
+            this.setControlState(event.keyCode, true);
+            this.sendMovementCommand(event.keyCode, 100);
 		}
 	}
 
 	private handleKeyUpEvent(event: KeyboardEvent) {
 		if (ALL_ALLOWED_ADVANCED_KEYS.includes(event.key)) {
-			this.controls[event.keyCode] = false;
-		}
-	}
+            this.setControlState(event.keyCode, false);
+            this.sendMovementCommand(event.keyCode, 0);
+		} else if (TAKEOFF_LAND.keyCode === event.keyCode) {
+            this.droneController.sendTakeOffOrLandCommand();
+        }
+    }
+    
+    private setControlState(keyCode: number, active: boolean) {
+        this.controls[keyCode] = active;
+    }
+
+    private sendMovementCommand(keyCode: number, value: number) {
+        const movement = ALL_ADVANCED_MOVEMENTS.find(mov => mov.keyCode === keyCode);
+        if (movement) {
+            this.droneController.sendMovementCommand(movement, value);
+        }
+    }
 }
 </script>
 
