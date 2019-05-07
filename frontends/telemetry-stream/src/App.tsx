@@ -3,6 +3,8 @@ import './App.css';
 import 'eventsource-polyfill';
 import TelemetryDto from './telemetry/TelemetryDto';
 import {Telemetry} from './Telemetry';
+import {BatteryStatus} from './BatteryStatus';
+
 
 interface IProps {
 
@@ -10,7 +12,7 @@ interface IProps {
 
 interface IState {
     droneStatus: TelemetryDto | null;
-    name: string;
+    url: string;
 }
 
 export default class App extends Component<IProps, IState> {
@@ -20,10 +22,11 @@ export default class App extends Component<IProps, IState> {
         super(props);
         this.state = {
             droneStatus: null,
-            name: "Hello"
+            url: 'http://localhost:3001'
         };
 
         this.eventSource = new EventSource("http://localhost:3001/data/mocked-events");
+        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
@@ -39,9 +42,21 @@ export default class App extends Component<IProps, IState> {
         this.eventSource.close();
     }
 
+
+    handleChange(event: any) {
+        if (event && event.target) {
+            this.setState({
+                ...this.state,
+                url: event && event.target && event.target.value
+            });
+        }
+    }
+
     render() {
         return (
             <div className="App">
+                <input type="text" value={this.state.url} onChange={this.handleChange}/>
+                <BatteryStatus url={this.state.url}/>
                 <Telemetry droneStatus={this.state.droneStatus}/>
             </div>
         );

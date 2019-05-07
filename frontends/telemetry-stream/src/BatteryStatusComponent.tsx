@@ -1,15 +1,36 @@
 import React from 'react';
-import SingleValueTelemetry from './SingleValueTelemetry';
 import ReactDOM from 'react-dom';
+import {BatteryStatus} from './BatteryStatus';
+
 
 export class BatteryStatusComponent extends HTMLElement {
+    private host: string | null;
+
     constructor() {
         super();
-        console.log("battery Status");
+        this.host = this.getAttribute("host");
+        console.log(`Battery Status: ${this.host}`);
+
+    }
+
+    static get observedAttributes() {
+        return ['host'];
+    }
+
+    attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+        switch (name) {
+            case 'host':
+                console.log(`Host changed from ${oldValue} to ${newValue}`);
+                this.host = newValue;
+                this.connectedCallback();
+                break;
+            default:
+
+        }
     }
 
     connectedCallback() {
-        ReactDOM.render(<SingleValueTelemetry value={10} label='Battery' suffix='%'/>, this);
+        ReactDOM.render(<BatteryStatus url={this.host}/>, this);
     }
 
     disconnectedCallback() {
@@ -17,5 +38,4 @@ export class BatteryStatusComponent extends HTMLElement {
     }
 }
 
-console.log("battery Status")
-window.customElements.define('battery-status', BatteryStatusComponent);
+window.customElements.define('battery-status-component',    BatteryStatusComponent);

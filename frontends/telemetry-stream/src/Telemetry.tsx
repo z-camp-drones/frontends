@@ -1,29 +1,12 @@
 import React, {Component} from 'react';
-import TelemetryDto, {TemperatureDto} from './telemetry/TelemetryDto';
+import TelemetryDto from './telemetry/TelemetryDto';
 import './Telemetry.css';
 import {Coordinate} from './Coordinate';
-import NumberFormat from 'react-number-format';
 import 'typeface-roboto';
 import 'material-icons/iconfont/material-icons.css';
 import SingleValueTelemetry from './SingleValueTelemetry';
+import {Temperature} from './Temperature';
 
-
-class Temperature extends Component<{ temperature: TemperatureDto }> {
-    render() {
-        return <div>
-            <label>Temperature</label>
-            <span>
-                        <NumberFormat value={this.props.temperature.low} displayType={'text'}
-                                      decimalScale={2}
-                                      suffix='°C'/>
-                        -
-                        <NumberFormat value={this.props.temperature.high} displayType={'text'}
-                                      decimalScale={2}
-                                      suffix='°C'/>
-                    </span>
-        </div>;
-    }
-}
 
 export class Telemetry extends Component<{ droneStatus: TelemetryDto | null }> {
     render() {

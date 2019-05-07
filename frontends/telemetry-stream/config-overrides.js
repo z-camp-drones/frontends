@@ -6,7 +6,7 @@ module.exports = function override(config, env) {
         ...config,
         entry: {
             app: config.entry,
-            components: ["./src/BatteryStatusComponent.tsx"],
+            batteryStatus: ["./src/BatteryStatusComponent.tsx"],
         },
 
     };
