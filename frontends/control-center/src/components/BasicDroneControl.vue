@@ -13,7 +13,8 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { ALL_ALLOWED_BASIC_KEYS } from "./keys";
+import { ALL_ALLOWED_BASIC_KEYS, ALL_BASIC_MOVEMENTS, TAKEOFF_LAND } from "./keys";
+import { DroneController } from "./DroneController";
 
 interface KeyControls {
 	[key: number]: boolean;
@@ -25,30 +26,51 @@ export default class BasicDroneControl extends Vue {
 		37: false,
 		38: false,
 		39: false,
-		40: false
+		40: false,
 	};
+	private droneController: DroneController;
+
+	constructor() {
+		super();
+		this.droneController = new DroneController();
+	}
 
 	public created() {
-		window.addEventListener("keydown", this.handleKeyDownEvent);
-		window.addEventListener("keyup", this.handleKeyUpEvent);
+		window.addEventListener('keydown', this.handleKeyDownEvent);
+		window.addEventListener('keyup', this.handleKeyUpEvent);
 	}
 
 	public beforeDestroy() {
-		window.removeEventListener("keydown", this.handleKeyDownEvent);
-		window.removeEventListener("keyup", this.handleKeyUpEvent);
+		window.removeEventListener('keydown', this.handleKeyDownEvent);
+		window.removeEventListener('keyup', this.handleKeyUpEvent);
 	}
 
 	private handleKeyDownEvent(event: KeyboardEvent) {
 		if (ALL_ALLOWED_BASIC_KEYS.includes(event.key)) {
-			this.controls[event.keyCode] = true;
+			this.setControlState(event.keyCode, true);
+            this.sendMovementCommand(event.keyCode, 100);
 		}
 	}
 
 	private handleKeyUpEvent(event: KeyboardEvent) {
 		if (ALL_ALLOWED_BASIC_KEYS.includes(event.key)) {
-			this.controls[event.keyCode] = false;
-		}
-	}
+			this.setControlState(event.keyCode, false);
+            this.sendMovementCommand(event.keyCode, 0);
+		} else if (TAKEOFF_LAND.keyCode === event.keyCode) {
+            this.droneController.sendTakeOffOrLandCommand();
+        }
+    }
+        
+    private setControlState(keyCode: number, active: boolean) {
+        this.controls[keyCode] = active;
+    }
+
+    private sendMovementCommand(keyCode: number, value: number) {
+        const movement = ALL_BASIC_MOVEMENTS.find(mov => mov.keyCode === keyCode);
+        if (movement) {
+            this.droneController.sendMovementCommand(movement, value);
+        }
+    }
 }
 </script>
 
