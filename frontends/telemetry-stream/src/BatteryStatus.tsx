@@ -32,7 +32,6 @@ export class BatteryStatus extends Component<IProps, IState> {
             this.eventSource.close();
         }
         if (url) {
-            console.log("Register new EventSource")
             this.eventSource = new EventSource(`${url}/data/mocked-events`);
             this.eventSource.addEventListener("closedConnection", () => this.eventSource && this.eventSource.close());
 
@@ -58,8 +57,6 @@ export class BatteryStatus extends Component<IProps, IState> {
     }
 
     private updateDroneState(droneStatus: TelemetryDto) {
-        console.log(`upsare `)
-        console.log(droneStatus)
         this.setState({...this.state, battery: droneStatus.battery});
     }
 }
