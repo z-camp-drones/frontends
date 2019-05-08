@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import logger from "../commons/logging/logger";
 import { Socket } from "socket.io";
 import { appSocket } from "../app";
-import { mockMessage, random } from "./helpers";
+import { mockMessage } from "./helpers";
 
 const sdk = require("../lib/tellojs");
 
