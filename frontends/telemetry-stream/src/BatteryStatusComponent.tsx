@@ -7,7 +7,6 @@ export class BatteryStatusComponent extends HTMLElement {
 
   constructor() {
     super();
-    console.log(`Tests`);
     this.host = this.getAttribute("host");
   }
 
