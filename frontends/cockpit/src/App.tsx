@@ -25,6 +25,10 @@ declare global {
         React.HTMLAttributes<HTMLElement>,
         HTMLElement
       >;
+      "flight-recorder": React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      >;
       "battery-status-component": BatteryComponentProps;
     }
   }
@@ -63,6 +67,7 @@ class App extends Component<IProps, IState> {
         <video-stream />
         <battery-status-component host={this.state.host} />
         <basic-drone-control />
+        <flight-recorder/>
         <advanced-drone-control />
       </div>
     );

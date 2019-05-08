@@ -34,4 +34,12 @@ export class DroneController {
   public sendEmergencyCommand() {
     this.socket.emit('emergency', {});
   }
+
+  public startRecording() {
+    this.socket.emit('start-recording', {});
+  }
+
+  public stopRecording() {
+    this.socket.emit('stop-recording', {});
+  }
 }
