@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "postinstall": "./install_all.sh",
-    "build": "./build_all.sh"
+    "build": "./build_all.sh",
+    "serve": "./serve_all.sh"
   },
   "dependencies": {}
 }
