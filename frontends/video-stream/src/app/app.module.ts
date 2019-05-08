@@ -3,10 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injector } from '@angular/core';
 
 import { createCustomElement } from '@angular/elements';
+import { CommandLogComponent } from './command-log/command-log.component';
+import { VideoStreamComponent } from './video-stream/video-stream.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CommandLogComponent,
+    VideoStreamComponent
   ],
   imports: [
     BrowserModule
@@ -14,7 +18,7 @@ import { createCustomElement } from '@angular/elements';
   providers: [],
   entryComponents: [
     AppComponent
-  ],
+  ]
 })
 export class AppModule {
 

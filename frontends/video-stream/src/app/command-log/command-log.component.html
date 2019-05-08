@@ -1,0 +1,12 @@
+<div class="command-log">
+  <div class="command-log-title">Command Log</div>
+  <div class="command-entries">
+    <div *ngFor="let command of events" class="command-entry">
+      {{ command.name }} -
+      {{ command.detail && command.detail.height }}
+      {{ command.detail && command.detail.pitch }}
+      {{ command.detail && command.detail.roll }}
+      {{ command.detail && command.detail.yaw }}
+    </div>
+  </div>
+</div>
