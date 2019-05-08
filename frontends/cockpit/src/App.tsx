@@ -29,12 +29,13 @@ class App extends Component<IProps, IState> {
 
     constructor(props: IProps) {
         super(props);
-        this.state = {host: 'http://localhost:3001'};
-        this.handleChange = this.handleChange.bind(this);
+        this.state = { host: 'http://localhost:3001' };
+        this.handleHostChange = this.handleHostChange.bind(this);
     }
 
-    handleChange(event: any) {
+    handleHostChange(event: any) {
         if (event && event.target) {
+			console.log('value changed');
             this.setState({
                 ...this.state,
                 host: event && event.target && event.target.value
@@ -45,8 +46,7 @@ class App extends Component<IProps, IState> {
     render() {
         return (
             <div>
-                <input type="text" value={this.state.host} onChange={this.handleChange}/>
-                <CockpitHeader></CockpitHeader>
+                <CockpitHeader host={this.state.host} onHostChange={this.handleHostChange}></CockpitHeader>
                 <video-stream></video-stream>
                 <battery-status-component host={this.state.host}></battery-status-component>
                 <basic-drone-control></basic-drone-control>
