@@ -92,7 +92,7 @@ export default class BasicDroneControl extends Vue {
     }
 
     .control-circle {
-        background-color: rgba(214, 214, 214, 0.4);
+        background-color: rgba(214, 214, 214, 0.7);
         width: 100%;
         height: 100%;
         border-radius: 50%;
@@ -106,7 +106,7 @@ export default class BasicDroneControl extends Vue {
         opacity: 0.7;
         width: 25px;
         height: 25px;
-        background: #a8a4a4;
+        background: #6c6c6c;
     }
 
     .arrow.active {
