@@ -5,6 +5,5 @@
     "postinstall": "./install_all.sh",
     "build": "./build_all.sh"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
