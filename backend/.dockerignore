@@ -1,0 +1,9 @@
+node_modules
+**/*.log
+install
+doc
+tests
+COPY . .
+
+EXPOSE 8080
+CMD [ "npm", "start" ]

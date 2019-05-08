@@ -1,0 +1,58 @@
+PUT http://{{host}}:3000/control/connect
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+PUT http://{{host}}:3000/control/takeoff
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+PUT http://{{host}}:3000/control/rotate/300
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+PUT http://{{host}}:3000/control/emergency
+Accept: */*
+Cache-Control: no-cache
+
+###
+PUT http://{{host}}:3000/control/go
+Accept: application/json
+Content-Type: application/json
+Cache-Control: no-cache
+
+{
+  "to": {
+    "x": 400,
+    "y": 10,
+    "z": -50
+  }
+}
+
+
+###
+
+PUT http://{{host}}:3000/control/rotate/-500
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+PUT http://{{host}}:3000/control/go
+Accept: */*
+Cache-Control: no-cache
+
+
+
+
+###
+PUT http://{{host}}:3000/control/land
+Accept: */*
+Cache-Control: no-cache
+
+###

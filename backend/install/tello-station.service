@@ -1,0 +1,15 @@
+[Unit]
+Description=Tello Server forwarding all commands to tello drone. Runs on Port 3000
+After=network.target
+
+[Service]
+PIDFile=/tmp/tello-server-99.pid
+User=pi
+Group=pi
+Restart=always
+KillSignal=SIGQUIT
+WorkingDirectory=/home/pi/deployment/
+ExecStart=/home/pi/deployment/nodeapp.sh
+
+[Install]
+WantedBy=multi-user.target

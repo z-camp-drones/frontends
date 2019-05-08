@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/frontends/cockpit/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/frontends/telemetry-stream/build" />
+      <excludeFolder url="file://$MODULE_DIR$/frontends/telemetry-stream/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/frontends/video-stream/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/frontends/video-stream/tmp" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
