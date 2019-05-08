@@ -45,6 +45,7 @@ class App extends Component<IProps, IState> {
     }
 
     handleHostChange(event: any) {
+        console.log('test');
         if (event && event.target) {
             this.setState({
                 ...this.state,

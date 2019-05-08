@@ -11,15 +11,18 @@ advanced-drone-control {
 }
 
 video-stream {
+    display: grid;
     height: 100%;
 }
 
 app-command-log {
     position: absolute;
     left: 0;
+    top: 65px;
 }
 
 battery-status-component {
     position: absolute;
-    left: 100px;
+    left: 180px;
+    top: 70px;
 }

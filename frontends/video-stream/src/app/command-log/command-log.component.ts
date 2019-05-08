@@ -14,7 +14,7 @@ export class CommandLogComponent implements OnInit {
     document.addEventListener('drone-control-event', (event: CustomEvent) => {
       const customEvent = event.detail as DroneCustomEvent;
       const state = customEvent.detail;
-      if (state.height === 0 && state.pitch === 0 && state.roll === 0 && state.yaw === 0) {
+      if ( state && state.height === 0 && state.pitch === 0 && state.roll === 0 && state.yaw === 0) {
         return;
       } else {
         this.events.push(customEvent);
