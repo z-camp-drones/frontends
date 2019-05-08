@@ -9,7 +9,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "serve-element": "ng build --prod --output-hashing none --watch",
-    "http-server": "http-server -p 8080 ./dist/video-stream"
+    "build-element": "ng build --prod --output-hashing none",
+    "http-server": "http-server -p 8080 ./dist/video-stream",
+    "serve": "npm run http-server"
   },
   "private": true,
   "dependencies": {

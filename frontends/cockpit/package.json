@@ -13,7 +13,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "http-server": "http-server -p 3000 ./build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -28,6 +29,7 @@
     "@types/react": "^16.8.12",
     "@types/jest": "24.0.11",
     "@types/node": "11.13.0",
-    "@types/react-dom": "16.8.3"
+    "@types/react-dom": "16.8.3",
+    "http-server": "^0.11.1"
   }
 }

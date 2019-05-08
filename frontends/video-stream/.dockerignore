@@ -1,5 +1,5 @@
 node_modules
 **/*.log
-install
-doc
-tests
+build
+dist
+e2e
