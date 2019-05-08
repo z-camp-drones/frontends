@@ -9,9 +9,8 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-RUN npm run build-element
 
 # Server
-EXPOSE 8082
+EXPOSE 3000
 
-CMD [ "npm", "run", "http-server" ]
+CMD [ "npm", "start"]

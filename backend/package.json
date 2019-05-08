@@ -9,7 +9,7 @@
   "scripts": {
     "start": "npm run build:live",
     "tsc": "tsc",
-    "build:live": "nodemon -r ts-node/register -- --inspect ./app.ts",
+    "build:live": "nodemon -r ts-node/register -- ./app.ts",
     "prod": "ts-node ./app.ts",
     "serve": "npm start"
   },

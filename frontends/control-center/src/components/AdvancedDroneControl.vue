@@ -30,17 +30,17 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import {
-  ALL_ALLOWED_ADVANCED_KEYS,
   ALL_ADVANCED_MOVEMENTS,
-  TAKEOFF_LAND,
-  EMERGENCY
+  ALL_ALLOWED_ADVANCED_KEYS,
+  EMERGENCY,
+  TAKEOFF_LAND
 } from "./keys";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
-  faRedo,
-  faUndo,
+  faAngleDoubleDown,
   faAngleDoubleUp,
-  faAngleDoubleDown
+  faRedo,
+  faUndo
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { DroneController } from "./DroneController";

@@ -1,8 +1,10 @@
 version: "3.5"
 services:
   backend:
-    container_name: backend
     build: backend
+    volumes:
+      - "./backend:/usr/src/app"
+      - "/usr/src/app/node_modules"
     ports:
       - "3001:3000"
       - "8889:8889/udp"
@@ -10,7 +12,6 @@ services:
       - "8890:8890/udp"
       - "11111:11111/udp"
   cockpit:
-    container_name: cockpit
     build: frontends/cockpit
     depends_on:
       - video-stream
@@ -22,7 +23,6 @@ services:
       - "./frontends/cockpit:/usr/src/app"
       - "/usr/src/app/node_modules"
   video-stream:
-    container_name: video-stream-component
     build: frontends/video-stream
     volumes:
       - "./frontends/video-stream:/usr/src/app"
@@ -32,7 +32,6 @@ services:
     ports:
       - "8080:8080"
   control-center:
-    container_name: control-center-component
     build: frontends/control-center
     depends_on:
       - backend
@@ -42,7 +41,6 @@ services:
       - "./frontends/control-center:/usr/src/app"
       - "/usr/src/app/node_modules"
   telemetry-stream:
-    container_name: telemetry-stream-component
     build: frontends/telemetry-stream
     depends_on:
       - backend

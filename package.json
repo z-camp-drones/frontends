@@ -7,7 +7,5 @@
     "serve": "./serve_all.sh"
   },
   "dependencies": {},
-  "devDependencies": {
-    "prettier": "^1.17.0"
-  }
+  "devDependencies": {}
 }

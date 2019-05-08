@@ -65,7 +65,7 @@ router.put(
     console.log(to);
     if (!to || !to.x || !to.y || !to.z) {
       console.log("invalid parameters");
-      throw "The 'to' parameter is required with x, y, z as numbers";
+      throw 'The \'to\' parameter is required with x, y, z as numbers';
     }
 
     let speed = parseInt((req.body && req.body.speed) || "");

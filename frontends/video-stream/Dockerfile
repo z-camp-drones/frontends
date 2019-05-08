@@ -14,4 +14,4 @@ RUN npm run build-element
 # Server
 EXPOSE 8080
 
-CMD [ "npm", "run", "http-server" ]
+CMD [ "npm", "run", "serve-element:live" ]

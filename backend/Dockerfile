@@ -21,4 +21,4 @@ EXPOSE 8890/udp
 # Video
 EXPOSE 11111/udp
 
-CMD [ "npm", "run", "prod" ]
+CMD [ "npm", "run", "start" ]
