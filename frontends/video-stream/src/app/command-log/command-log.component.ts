@@ -27,8 +27,10 @@ export class CommandLogComponent implements OnInit {
   }
 
   scrollToBottom() {
-    const commandLogEntries = document.querySelector('.command-entries');
-    commandLogEntries.scrollTop = commandLogEntries.scrollHeight - commandLogEntries.clientHeight;
+    setTimeout(() => {
+      const commandLogEntries = document.querySelector('.command-entries');
+      commandLogEntries.scrollTop = commandLogEntries.scrollHeight - commandLogEntries.clientHeight;
+    });
   }
 
 }
