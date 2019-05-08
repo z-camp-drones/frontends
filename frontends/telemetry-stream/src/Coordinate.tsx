@@ -2,7 +2,7 @@ import React from 'react';
 import {CoordinateDto} from './telemetry/TelemetryDto';
 import NumberFormat from 'react-number-format';
 import './Coordinate.css';
-import {SigColor} from './SigColorStyle';
+import {SigColor} from './styles/SigColorStyle';
 
 const Coordinate = ({coordinate, label}: { coordinate: CoordinateDto, label: string }) => (
     <div>

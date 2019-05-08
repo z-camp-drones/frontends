@@ -2,7 +2,7 @@ import React from 'react';
 import './SingleValueTelemetry.css';
 import Tooltip from './Tooltip';
 import NumberFormat from 'react-number-format';
-import {SigColor} from './SigColorStyle';
+import {SigColor} from './styles/SigColorStyle';
 
 interface IProps {
     label: string;
