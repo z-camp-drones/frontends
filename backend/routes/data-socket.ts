@@ -3,12 +3,10 @@ import logger from "../commons/logging/logger";
 import { Socket } from "socket.io";
 import { appSocket } from "../app";
 import { mockMessage } from "./helpers";
-
-const sdk = require("../lib/tellojs");
+import { getStateEmitter } from "./droneStateEmitter";
 
 const router = Router();
 let timer: any = null;
-let stateEmitter: any = null;
 let socket: Socket = null;
 
 router.get("/events", (req: Request, res: Response) => {
@@ -30,7 +28,7 @@ router.delete("/mocked-events", (req: Request, res: Response) => {
 });
 
 function stopEventStream() {
-  stateEmitter.off("message", pushDataOntoSocket);
+  getStateEmitter().off("message", pushDataOntoSocket);
 }
 
 function getSocket() {
@@ -45,12 +43,7 @@ function pushDataOntoSocket(message: string) {
 }
 
 function startEventStream() {
-  if (stateEmitter === null) {
-    stateEmitter = sdk.receiver.state.bind(); // Binding to port of state
-    stateEmitter.on("close", () => {
-      stateEmitter = null;
-    });
-  }
+  const stateEmitter = getStateEmitter();
   stateEmitter.on("message", pushDataOntoSocket);
 
   // TODO: handle socket disconnect

@@ -1,21 +1,14 @@
 import { Request, Response, Router } from "express";
 import logger from "../commons/logging/logger";
 import { mockMessage } from "./helpers";
+import { getStateEmitter } from "./droneStateEmitter";
 
 const router = Router();
 
-const sdk = require("../lib/tellojs");
-
-let stateEmitter: any = null;
 let messageId = 0;
 
 function telloJsServerSideEvents(req: Request, res: Response) {
-  if (stateEmitter === null) {
-    stateEmitter = sdk.receiver.state.bind(); // Binding to port of state
-    stateEmitter.on("close", () => {
-      stateEmitter = null;
-    });
-  }
+  const stateEmitter = getStateEmitter();
 
   let emitMessage = (message: any) => {
     res.write(`id: ${messageId}\n`);

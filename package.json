@@ -6,5 +6,8 @@
     "build": "./build_all.sh",
     "serve": "./serve_all.sh"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "prettier": "^1.17.0"
+  }
 }
