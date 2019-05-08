@@ -1,17 +1,20 @@
-import React, { ChangeEvent } from 'react';
-import './CockpitHeader.css';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import React, { ChangeEvent } from "react";
+import "./CockpitHeader.css";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 
 export interface Props {
   host: string;
-  onHostChange: ((event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void),
+  onHostChange: (
+    event: ChangeEvent<
+      HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
+    >
+  ) => void;
 }
 
 function CockpitHeader(props: Props) {
-
   return (
     <div className="header">
       <AppBar position="static" color="default">

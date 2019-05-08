@@ -1,11 +1,11 @@
 basic-drone-control {
-    position: absolute;
-    bottom: 30px;
-    right: 30px;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
 }
 
 advanced-drone-control {
-    position: absolute;
-    bottom: 30px;
-    left: 30px;
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
 }
