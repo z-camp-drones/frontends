@@ -11,17 +11,18 @@ import DroneController from './domain/drone-controller';
 
 import {Socket} from 'socket.io';
 import CommandHandler from './domain/command-handler';
+import {getAppPort, getVideoForwardPort, getVideoSocketPort} from './app-config';
+import createVideoStreamServer from './video-stream/video-stream-proxy';
+import VideoController from './domain/video-controller';
 
 let appSocket: Socket = null;
-
-const APP_PORT: number = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 const allowCorsRequests = (app: Router) => {
   app.use((req: Request, res: Response, next: NextFunction) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header(
       'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept'
+      'Origin, X-Requested-With, Content-Type, Accept',
     );
     next();
   });
@@ -85,11 +86,15 @@ const create = (port: number) => {
   const io = createSocket(server);
   configureSocket(io);
 
+  new VideoController();
+
   server.listen(port, () => {
     logger.warn('The server is running on: http://localhost:%s ', port);
   });
+
+  createVideoStreamServer(getVideoForwardPort(), getVideoSocketPort());
 };
 
-export default create(APP_PORT);
+export default create(getAppPort());
 
 export {appSocket};

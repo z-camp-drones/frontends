@@ -6,8 +6,7 @@ export default class DroneController {
   private droneIsAirborne = false;
 
   constructor() {
-    sdk.control
-      .connect()
+    sdk.control.connect()
       .then(() => console.log('Connected to drone'))
       .catch((e: any) => console.log('Error connecting to drone:', e));
   }
@@ -18,7 +17,7 @@ export default class DroneController {
         command.roll || 0,
         command.pitch || 0,
         command.height || 0,
-        command.yaw || 0
+        command.yaw || 0,
       )
       .catch((e: any) => console.log('Error sending RC command to drone: ', e));
   }

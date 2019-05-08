@@ -20,5 +20,7 @@ EXPOSE 8001/udp
 EXPOSE 8890/udp
 # Video
 EXPOSE 11111/udp
+# Video Stream websocket Express
+EXPOSE 8082
 
 CMD [ "npm", "run", "start" ]

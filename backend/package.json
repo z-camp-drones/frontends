@@ -25,6 +25,7 @@
     "@types/morgan": "^1.7.35",
     "@types/node": "^10.9.4",
     "@types/socket.io": "^2.1.2",
+    "@types/ws": "^6.0.1",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
@@ -32,13 +33,14 @@
     "ejs": "~2.5.7",
     "express": "^4.16.4",
     "http-errors": "~1.6.2",
-    "lodash.throttle": "^4.1.1",
     "morgan": "~1.9.0",
     "nodemon": "^1.18.4",
     "socket.io": "^2.2.0",
     "ts-node": "^7.0.1",
     "typescript": "^3.4.2",
     "waait": "^1.0.4",
-    "winston": "^3.2.1"
-  }
+    "winston": "^3.2.1",
+    "ws": "^7.0.0"
+  },
+  "devDependencies": {}
 }

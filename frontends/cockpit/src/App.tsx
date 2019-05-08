@@ -60,6 +60,7 @@ class App extends Component<IProps, IState> {
           host={this.state.host}
           onHostChange={this.handleHostChange}
         />
+
         <video-stream />
         <battery-status-component host={this.state.host} />
         <basic-drone-control />

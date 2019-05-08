@@ -28,6 +28,13 @@
 <div id="root">
 
 </div>
+<canvas id="video-canvas" style="border: thin solid black;"></canvas>
+<script type="text/javascript">
+  var canvas = document.getElementById('video-canvas');
+  var url = 'ws://' + document.location.hostname + ':8082/';
+  var player = new JSMpeg.Player(url, {canvas: canvas});
+</script>
+
 <!--
     This HTML file is a template.
     If you open it directly in the browser, you will see an empty page.
@@ -52,6 +59,8 @@
 <script type="text/javascript" src="http://localhost:8082/static/js/batteryStatus.js"   ></script>
 <link href="http://localhost:8082/static/css/batteryStatus.css" rel="stylesheet" type="text/css">
 
+
+<script src="/jsmpeg.min.js"></script>
 
 </body>
 
