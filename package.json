@@ -1,11 +1,10 @@
 {
   "name": "all",
   "version": "1.0.0",
-  "scripts":{
+  "scripts": {
     "postinstall": "./install_all.sh",
-    "build": "./build_all.sh",
+    "build": "./build_all.sh"
   },
   "dependencies": {
-    
   }
 }
