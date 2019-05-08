@@ -1,4 +1,5 @@
 module.exports = function override(config, env) {
+    return config;
     if (!config.entry) {
         config.entry = [];
     }
@@ -31,4 +32,4 @@ module.exports = function override(config, env) {
         }
     }
     return newConfig;
-}
+};
