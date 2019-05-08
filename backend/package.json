@@ -40,15 +40,5 @@
     "typescript": "^3.4.2",
     "waait": "^1.0.4",
     "winston": "^3.2.1"
-  },
-  "devDependencies": {
-    "husky": "^2.2.0",
-    "prettier": "^1.17.0",
-    "pretty-quick": "^1.10.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
   }
 }

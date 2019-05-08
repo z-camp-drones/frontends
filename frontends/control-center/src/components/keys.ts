@@ -1,4 +1,4 @@
-import { DroneState } from "./DroneController";
+import {DroneState} from './DroneController';
 
 export interface Movement {
   key: string;
@@ -7,119 +7,119 @@ export interface Movement {
 }
 
 const FORWARD: Movement = {
-  key: "ArrowUp",
+  key: 'ArrowUp',
   keyCode: 38,
   adaptDroneState(state: DroneState, value: number) {
     return {
       ...state,
-      pitch: value
+      pitch: value,
     } as DroneState;
-  }
+  },
 };
 const BACK: Movement = {
-  key: "ArrowDown",
+  key: 'ArrowDown',
   keyCode: 40,
   adaptDroneState(state: DroneState, value: number) {
     return {
       ...state,
-      pitch: 0 - value
+      pitch: 0 - value,
     } as DroneState;
-  }
+  },
 };
 const LEFT: Movement = {
-  key: "ArrowLeft",
+  key: 'ArrowLeft',
   keyCode: 37,
   adaptDroneState(state: DroneState, value: number) {
     return {
       ...state,
-      roll: 0 - value
+      roll: 0 - value,
     } as DroneState;
-  }
+  },
 };
 const RIGHT: Movement = {
-  key: "ArrowRight",
+  key: 'ArrowRight',
   keyCode: 39,
   adaptDroneState(state: DroneState, value: number) {
     return {
       ...state,
-      roll: value
+      roll: value,
     } as DroneState;
-  }
+  },
 };
 
 const UP: Movement = {
-  key: "w",
+  key: 'w',
   keyCode: 87,
   adaptDroneState(state: DroneState, value: number) {
     return {
       ...state,
-      height: value
+      height: value,
     } as DroneState;
-  }
+  },
 };
 
 const DOWN: Movement = {
-  key: "s",
+  key: 's',
   keyCode: 83,
   adaptDroneState(state: DroneState, value: number) {
     return {
       ...state,
-      height: 0 - value
+      height: 0 - value,
     } as DroneState;
-  }
+  },
 };
 
 const ROTATE_LEFT: Movement = {
-  key: "a",
+  key: 'a',
   keyCode: 65,
   adaptDroneState(state: DroneState, value: number) {
     return {
       ...state,
-      yaw: 0 - value
+      yaw: 0 - value,
     } as DroneState;
-  }
+  },
 };
 
 const ROTATE_RIGHT: Movement = {
-  key: "d",
+  key: 'd',
   keyCode: 68,
   adaptDroneState(state: DroneState, value: number) {
     return {
       ...state,
-      yaw: value
+      yaw: value,
     } as DroneState;
-  }
+  },
 };
 
 export const TAKEOFF_LAND: Movement = {
-  key: "",
+  key: '',
   keyCode: 32,
   adaptDroneState(state: DroneState, value: number) {
-    return { ...state };
-  }
+    return {...state};
+  },
 };
 
 export const EMERGENCY: Movement = {
-  key: "Escape",
+  key: 'Escape',
   keyCode: 27,
   adaptDroneState(state: DroneState, value: number) {
-    return { ...state };
-  }
+    return {...state};
+  },
 };
 
 export const ALL_BASIC_MOVEMENTS: Movement[] = [FORWARD, BACK, LEFT, RIGHT];
 
 export const ALL_ALLOWED_BASIC_KEYS: string[] = ALL_BASIC_MOVEMENTS.map(
-  k => k.key
+  k => k.key,
 );
 
 export const ALL_ADVANCED_MOVEMENTS: Movement[] = [
   UP,
   DOWN,
   ROTATE_LEFT,
-  ROTATE_RIGHT
+  ROTATE_RIGHT,
 ];
 
 export const ALL_ALLOWED_ADVANCED_KEYS: string[] = ALL_ADVANCED_MOVEMENTS.map(
-  k => k.key
+  k => k.key,
 );

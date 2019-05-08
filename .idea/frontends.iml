@@ -6,7 +6,10 @@
       <excludeFolder url="file://$MODULE_DIR$/backend/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/frontends/cockpit/build" />
       <excludeFolder url="file://$MODULE_DIR$/frontends/cockpit/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/frontends/control-center/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/frontends/telemetry-stream/build" />
       <excludeFolder url="file://$MODULE_DIR$/frontends/telemetry-stream/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/frontends/video-stream/dist" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

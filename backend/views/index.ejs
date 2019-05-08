@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <script
-            src="/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css'/>
+  <script
+          src="/jquery-3.3.1.min.js"
+          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+          crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -24,130 +24,130 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    var socket = io();
+  var socket = io();
 
-    socket.on('drone-data', (message) => {
-        console.log(message);
-    });
+  socket.on('drone-data', (message) => {
+    console.log(message);
+  });
 
-    const KEY_ARROW_UP = 38;
-    const KEY_ARROW_LEFT = 37;
-    const KEY_ARROW_RIGHT = 39;
-    const KEY_ARROW_DOWN = 40;
-    const KEY_SPACE = 32;
-    const KEY_W = 87;
-    const KEY_S = 83;
-    const KEY_A = 65;
-    const KEY_D = 68;
-    const KEY_ENTER = 27;
+  const KEY_ARROW_UP = 38;
+  const KEY_ARROW_LEFT = 37;
+  const KEY_ARROW_RIGHT = 39;
+  const KEY_ARROW_DOWN = 40;
+  const KEY_SPACE = 32;
+  const KEY_W = 87;
+  const KEY_S = 83;
+  const KEY_A = 65;
+  const KEY_D = 68;
+  const KEY_ENTER = 27;
 
-    let movement = {
-        pitch: 0,
-        roll: 0,
-        yaw: 0,
-        height: 0
-    };
+  let movement = {
+    pitch: 0,
+    roll: 0,
+    yaw: 0,
+    height: 0
+  };
 
-    const setMovement = (updatedProperty) => {
-        movement = Object.assign({}, movement, updatedProperty);
-        socket.emit('movement', movement);
+  const setMovement = (updatedProperty) => {
+    movement = Object.assign({}, movement, updatedProperty);
+    socket.emit('movement', movement);
+  }
+
+  window.addEventListener('keydown', (e) => {
+    switch (e.keyCode) {
+      case KEY_SPACE:
+        socket.emit('takeoff_land', {});
+        return;
+      case KEY_ARROW_UP:
+        setMovement({pitch: 100});
+        break;
+      case KEY_ARROW_DOWN:
+        setMovement({pitch: -100});
+        break;
+      case KEY_ARROW_LEFT:
+        setMovement({roll: -100});
+        break;
+      case KEY_ARROW_RIGHT:
+        setMovement({roll: 100});
+        break;
+      case KEY_W:
+        setMovement({height: 100});
+        break;
+      case KEY_S:
+        setMovement({height: -100});
+        break;
+      case KEY_A:
+        setMovement({yaw: -100});
+        break;
+      case KEY_D:
+        setMovement({yaw: 100});
+        break;
+      case KEY_ENTER:
+        socket.emit('emergency', {});
+        break;
+      default:
+        break;
     }
+  });
 
-    window.addEventListener('keydown', (e) => {
-        switch (e.keyCode) {
-            case KEY_SPACE:
-                socket.emit('takeoff_land', {});
-                return;
-            case KEY_ARROW_UP:
-                setMovement({pitch: 100});
-                break;
-            case KEY_ARROW_DOWN:
-                setMovement({pitch: -100});
-                break;
-            case KEY_ARROW_LEFT:
-                setMovement({roll: -100});
-                break;
-            case KEY_ARROW_RIGHT:
-                setMovement({roll: 100});
-                break;
-            case KEY_W:
-                setMovement({height: 100});
-                break;
-            case KEY_S:
-                setMovement({height: -100});
-                break;
-            case KEY_A:
-                setMovement({yaw: -100});
-                break;
-            case KEY_D:
-                setMovement({yaw: 100});
-                break;
-            case KEY_ENTER:
-                socket.emit('emergency', {});
-                break;
-            default:
-                break;
-        }
-    });
-
-    window.addEventListener('keyup', (e) => {
-        switch (e.keyCode) {
-            case KEY_ARROW_UP:
-                setMovement({pitch: 0});
-                break;
-            case KEY_ARROW_DOWN:
-                setMovement({pitch: 0});
-                break;
-            case KEY_ARROW_LEFT:
-                setMovement({roll: 0});
-                break;
-            case KEY_ARROW_RIGHT:
-                setMovement({roll: 0});
-                break;
-            case KEY_W:
-                setMovement({height: 0});
-                break;
-            case KEY_S:
-                setMovement({height: 0});
-                break;
-            case KEY_A:
-                setMovement({yaw: 0});
-                break;
-            case KEY_D:
-                setMovement({yaw: 0});
-                break;
-            default:
-                break;
-        }
-    });
+  window.addEventListener('keyup', (e) => {
+    switch (e.keyCode) {
+      case KEY_ARROW_UP:
+        setMovement({pitch: 0});
+        break;
+      case KEY_ARROW_DOWN:
+        setMovement({pitch: 0});
+        break;
+      case KEY_ARROW_LEFT:
+        setMovement({roll: 0});
+        break;
+      case KEY_ARROW_RIGHT:
+        setMovement({roll: 0});
+        break;
+      case KEY_W:
+        setMovement({height: 0});
+        break;
+      case KEY_S:
+        setMovement({height: 0});
+        break;
+      case KEY_A:
+        setMovement({yaw: 0});
+        break;
+      case KEY_D:
+        setMovement({yaw: 0});
+        break;
+      default:
+        break;
+    }
+  });
 
 </script>
 
 <script type="application/javascript">
-    $(".control").click(function () {
-        var id = $(this).attr("id");
-        $(".control").prop("disabled", true);
-        $.ajax({
-            url: './control/' + id,
-            type: 'PUT',
-            success: function (response) {
-                console.log("Success: " + id + " - " + JSON.stringify(response));
-            },
-            complete: function () {
-                $(".control").prop("disabled", false);
-            }
-        });
+  $(".control").click(function () {
+    var id = $(this).attr("id");
+    $(".control").prop("disabled", true);
+    $.ajax({
+      url: './control/' + id,
+      type: 'PUT',
+      success: function (response) {
+        console.log("Success: " + id + " - " + JSON.stringify(response));
+      },
+      complete: function () {
+        $(".control").prop("disabled", false);
+      }
     });
-    $("#sse").click(function () {
-        $("#sse").hide();
-        $("#sse-stop").show();
-        $.ajax({url: './datastream/events', type: 'GET'});
-    });
-    $("#sse-stop").click(() => {
-        $("#sse-stop").hide();
-        $("#sse").show();
-        $.ajax({url: './datastream/events', type: 'DELETE'});
-    })
+  });
+  $("#sse").click(function () {
+    $("#sse").hide();
+    $("#sse-stop").show();
+    $.ajax({url: './datastream/events', type: 'GET'});
+  });
+  $("#sse-stop").click(() => {
+    $("#sse-stop").hide();
+    $("#sse").show();
+    $.ajax({url: './datastream/events', type: 'DELETE'});
+  })
 </script>
 </body>
 </html>

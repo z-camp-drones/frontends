@@ -1,7 +1,7 @@
-import { Request, Response, Router } from "express";
-import logger from "../commons/logging/logger";
-import { mockMessage } from "./helpers";
-import { getStateEmitter } from "./droneStateEmitter";
+import {Request, Response, Router} from 'express';
+import logger from '../commons/logging/logger';
+import {mockMessage} from './helpers';
+import {getStateEmitter} from './droneStateEmitter';
 
 const router = Router();
 
@@ -16,10 +16,10 @@ function telloJsServerSideEvents(req: Request, res: Response) {
     messageId += 1;
   };
 
-  stateEmitter.on("message", emitMessage);
+  stateEmitter.on('message', emitMessage);
 
-  req.on("close", () => {
-    console.error("Connection was closed.");
+  req.on('close', () => {
+    console.error('Connection was closed.');
   });
 }
 
@@ -36,32 +36,32 @@ function mockedEvents(req: Request, res: Response) {
   };
   const timer = setInterval(emitMessage, 2000);
 
-  req.on("close", () => {
-    console.error("Connection was closed.");
+  req.on('close', () => {
+    console.error('Connection was closed.');
     clearInterval(timer);
   });
 }
 
-router.get("/events", (req: Request, res: Response) => {
+router.get('/events', (req: Request, res: Response) => {
   // Server-Send-events Setup
   res.writeHead(200, {
-    "Content-Type": "text/event-stream",
-    "Cache-Control": "no-cache",
-    Connection: "keep-alive"
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    Connection: 'keep-alive'
   });
-  res.write("\n");
+  res.write('\n');
 
   telloJsServerSideEvents(req, res);
 });
 
-router.get("/mocked-events", (req: Request, res: Response) => {
+router.get('/mocked-events', (req: Request, res: Response) => {
   // Server-Send-events Setup
   res.writeHead(200, {
-    "Content-Type": "text/event-stream",
-    "Cache-Control": "no-cache",
-    Connection: "keep-alive"
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    Connection: 'keep-alive'
   });
-  res.write("\n");
+  res.write('\n');
 
   mockedEvents(req, res);
 });

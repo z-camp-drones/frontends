@@ -1,56 +1,56 @@
-import { Request, RequestHandler, Response, Router } from "express";
+import {Request, RequestHandler, Response, Router} from 'express';
 
 const router = Router();
-const sdk = require("../lib/tellojs");
+const sdk = require('../lib/tellojs');
 
-const asyncMiddleware = require("../infrastructure/async-middleware");
-const singleExecution = require("../infrastructure/single-execution-middleware");
+const asyncMiddleware = require('../infrastructure/async-middleware');
+const singleExecution = require('../infrastructure/single-execution-middleware');
 
 const singleExecutionAndAsyncHandler = (fn: RequestHandler) =>
   singleExecution(asyncMiddleware(fn));
 
 const okResponse = (res: Response, result: string, optionalData?: any) => {
-  res.json({ text: result, status: "ok", ...optionalData });
+  res.json({text: result, status: 'ok', ...optionalData});
 };
 
 router.put(
-  "/connect",
+  '/connect',
   singleExecutionAndAsyncHandler(async (req: Request, res: Response) => {
     await sdk.control.connect();
-    okResponse(res, "connected");
+    okResponse(res, 'connected');
   })
 );
 
 router.put(
-  "/takeoff",
+  '/takeoff',
   singleExecutionAndAsyncHandler(async (req: Request, res: Response) => {
-    console.log("initiate takeoff ...");
+    console.log('initiate takeoff ...');
     await sdk.control.takeOff();
-    okResponse(res, "took off");
+    okResponse(res, 'took off');
   })
 );
 
 router.put(
-  "/land",
+  '/land',
   singleExecutionAndAsyncHandler(async (req: Request, res: Response) => {
     await sdk.control.land();
-    okResponse(res, "landed");
+    okResponse(res, 'landed');
   })
 );
 
 router.put(
-  "/emergency",
+  '/emergency',
   asyncMiddleware(async (req: Request, res: Response) => {
     await sdk.control.emergency();
-    okResponse(res, "emergency-stop");
+    okResponse(res, 'emergency-stop');
   })
 );
 
 router.put(
-  "/stop",
+  '/stop',
   singleExecutionAndAsyncHandler(async (req: Request, res: Response) => {
     await sdk.control.stop();
-    okResponse(res, "stopped");
+    okResponse(res, 'stopped');
   })
 );
 
@@ -59,37 +59,37 @@ router.put(
  *
  */
 router.put(
-  "/go",
+  '/go',
   singleExecutionAndAsyncHandler(async (req: Request, res: Response) => {
     let to = req.body && req.body.to;
     console.log(to);
     if (!to || !to.x || !to.y || !to.z) {
-      console.log("invalid parameters");
+      console.log('invalid parameters');
       throw 'The \'to\' parameter is required with x, y, z as numbers';
     }
 
-    let speed = parseInt((req.body && req.body.speed) || "");
+    let speed = parseInt((req.body && req.body.speed) || '');
     if (isNaN(speed)) {
       speed = 10;
     }
     await sdk.control.go(to, speed);
-    okResponse(res, "stopped");
+    okResponse(res, 'stopped');
   })
 );
 
 router.put(
-  "/rotate/:degrees",
+  '/rotate/:degrees',
   singleExecutionAndAsyncHandler(async (req: Request, res: Response) => {
-    let degrees = parseInt(req.param("degrees"));
+    let degrees = parseInt(req.param('degrees'));
     let direction;
     if (degrees < 0) {
-      direction = "clockwise";
+      direction = 'clockwise';
       await sdk.control.rotate.clockwise(Math.abs(degrees));
     } else {
-      direction = "counterClockwise";
+      direction = 'counterClockwise';
       await sdk.control.rotate.counterClockwise(Math.abs(degrees));
     }
-    okResponse(res, "rotated", { direction, degrees: Math.abs(degrees) });
+    okResponse(res, 'rotated', {direction, degrees: Math.abs(degrees)});
   })
 );
 
@@ -106,7 +106,7 @@ router.use((err: any, req: Request, res: Response) => {
   } catch (e) {
     console.error(`Could not render json: `);
     console.error(e);
-    res.json({ status: 500, message: "JSON Render issue" });
+    res.json({status: 500, message: 'JSON Render issue'});
   }
 });
 

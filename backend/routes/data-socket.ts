@@ -1,34 +1,34 @@
-import { Request, Response, Router } from "express";
-import logger from "../commons/logging/logger";
-import { Socket } from "socket.io";
-import { appSocket } from "../app";
-import { mockMessage } from "./helpers";
-import { getStateEmitter } from "./droneStateEmitter";
+import {Request, Response, Router} from 'express';
+import logger from '../commons/logging/logger';
+import {Socket} from 'socket.io';
+import {appSocket} from '../app';
+import {mockMessage} from './helpers';
+import {getStateEmitter} from './droneStateEmitter';
 
 const router = Router();
 let timer: any = null;
 let socket: Socket = null;
 
-router.get("/events", (req: Request, res: Response) => {
+router.get('/events', (req: Request, res: Response) => {
   startEventStream();
   res.sendStatus(200);
 });
-router.delete("/events", (req: Request, res: Response) => {
+router.delete('/events', (req: Request, res: Response) => {
   stopEventStream();
   res.sendStatus(200);
 });
-router.get("/mocked-events", (req: Request, res: Response) => {
+router.get('/mocked-events', (req: Request, res: Response) => {
   startMockEventStream();
   res.sendStatus(200);
 });
 
-router.delete("/mocked-events", (req: Request, res: Response) => {
+router.delete('/mocked-events', (req: Request, res: Response) => {
   stopMockEventStream();
   res.sendStatus(200);
 });
 
 function stopEventStream() {
-  getStateEmitter().off("message", pushDataOntoSocket);
+  getStateEmitter().off('message', pushDataOntoSocket);
 }
 
 function getSocket() {
@@ -39,12 +39,12 @@ function getSocket() {
 }
 
 function pushDataOntoSocket(message: string) {
-  getSocket().emit("drone-data", message);
+  getSocket().emit('drone-data', message);
 }
 
 function startEventStream() {
   const stateEmitter = getStateEmitter();
-  stateEmitter.on("message", pushDataOntoSocket);
+  stateEmitter.on('message', pushDataOntoSocket);
 
   // TODO: handle socket disconnect
 }
