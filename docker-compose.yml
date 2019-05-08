@@ -12,15 +12,15 @@ services:
     build: frontends/cockpit
     ports:
       - "80:3000"
-  control-center:
-    build: frontends/control-center
-    ports:
-      - "8081:3000"
   video-stream:
     build: frontends/video-stream
     ports:
-      - "8080:3000"
+      - "8080:8080"
+  control-center:
+    build: frontends/control-center
+    ports:
+      - "8081:8081"
   telemetry-stream:
     build: frontends/telemetry-stream
     ports:
-      - "8082:3000"
+      - "8082:8082"

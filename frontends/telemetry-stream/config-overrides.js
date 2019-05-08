@@ -1,35 +1,33 @@
 module.exports = function override(config, env) {
-    return config;
-    if (!config.entry) {
-        config.entry = [];
+  if (!config.entry) {
+    config.entry = [];
+  }
+  let newConfig = {
+    ...config,
+    entry: {
+      app: config.entry,
+      batteryStatus: ["./src/BatteryStatusComponent.tsx"]
     }
-    let newConfig = {
-        ...config,
-        entry: {
-            app: config.entry,
-            batteryStatus: ["./src/BatteryStatusComponent.tsx"],
-        },
-
-    };
-    newConfig.optimization.splitChunks = {
-        cacheGroups: {
-            default: false,
-        },
-    };
-
-    newConfig.optimization.runtimeChunk = false;
-    newConfig.output.filename = 'static/js/[name].js';
-    newConfig.output.chunkFilename = 'static/js/[name].chunk.js';
-    // remove hash from css files.
-    for (let plugin in newConfig.plugins) {
-        let p = newConfig.plugins[plugin];
-        if (p.options && p.options.filename && p.options.chunkFilename) {
-            p.options = {
-                ...p.options,
-                filename: 'static/css/[name].css',
-                chunkFilename: 'static/css/[name].chunk.css'
-            };
-        }
+  };
+  newConfig.optimization.splitChunks = {
+    cacheGroups: {
+      default: false
     }
-    return newConfig;
+  };
+
+  newConfig.optimization.runtimeChunk = false;
+  newConfig.output.filename = "static/js/[name].js";
+  newConfig.output.chunkFilename = "static/js/[name].chunk.js";
+  // remove hash from css files.
+  for (let plugin in newConfig.plugins) {
+    let p = newConfig.plugins[plugin];
+    if (p.options && p.options.filename && p.options.chunkFilename) {
+      p.options = {
+        ...p.options,
+        filename: "static/css/[name].css",
+        chunkFilename: "static/css/[name].chunk.css"
+      };
+    }
+  }
+  return newConfig;
 };
