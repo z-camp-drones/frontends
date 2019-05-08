@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SingleValueTelemetry from './SingleValueTelemetry';
 import TelemetryDto from './telemetry/TelemetryDto';
+import TelemetryService from './TelemetryService';
 
 interface IProps {
     url: string | null;
@@ -13,8 +14,8 @@ interface IState {
 
 
 export class BatteryStatus extends Component<IProps, IState> {
-    private eventSource: EventSource | null = null;
-    private previousUrl: string | null = null;
+
+    private service: TelemetryService;
 
     constructor(props: IProps) {
         super(props);
@@ -22,46 +23,22 @@ export class BatteryStatus extends Component<IProps, IState> {
             battery: 0,
             connectionError: false
         }
+        this.service = new TelemetryService(this.props.url);
     }
 
     componentDidMount() {
-        this.queryData(this.props.url);
-    }
-
-    private queryData(url: string | null) {
-
-        if (this.eventSource) {
-            this.eventSource.close();
-        }
-        if (url) {
-            try {
-                this.setState({...this.state, connectionError: false, battery: null});
-                this.eventSource = new EventSource(`${url}/data/mocked-events`);
-                this.eventSource.addEventListener("closedConnection", () => this.eventSource && this.eventSource.close());
-
-                this.eventSource.onmessage = (e) => {
-                    this.updateDroneState(JSON.parse(e.data));
-                };
-                this.eventSource.onerror = (e) => {
-                    this.setState({...this.state, connectionError: true});
-                };
-            }
-            catch (e) {
-                this.setState({...this.state, battery: null, connectionError: true})
-            }
-        }
+        this.service.onTelemetetryReceived((droneStatus: TelemetryDto) => this.updateDroneState(droneStatus))
     }
 
     componentWillUpdate() {
-        if (this.previousUrl !== this.props.url) {
-            this.previousUrl = this.props.url;
-            this.queryData(this.props.url);
-        }
+        this.service.updateUrl(this.props.url);
     }
 
     render() {
         if (this.state.connectionError) {
-            return (<div>Connection not established.</div>)
+            return (<div>
+                Connection not established.
+            </div>)
         }
         if (!this.state.battery) {
             return (<div>No Data yet. Loading...</div>)
@@ -76,6 +53,6 @@ export class BatteryStatus extends Component<IProps, IState> {
     }
 
     private updateDroneState(droneStatus: TelemetryDto) {
-        this.setState({...this.state, battery: droneStatus.battery, connectionError: false});
+        this.setState({battery: droneStatus.battery, connectionError: false});
     }
 }

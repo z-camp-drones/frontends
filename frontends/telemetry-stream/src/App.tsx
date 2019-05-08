@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import './App.css';
 import 'eventsource-polyfill';
 import TelemetryDto from './telemetry/TelemetryDto';
-import {Telemetry} from './Telemetry';
+import Telemetry from './Telemetry';
 import {BatteryStatus} from './BatteryStatus';
+import TelemetryService from './TelemetryService';
 
 
 interface IProps {
@@ -16,7 +17,6 @@ interface IState {
 }
 
 export default class App extends Component<IProps, IState> {
-    private eventSource: EventSource;
 
     constructor(props: IProps) {
         super(props);
@@ -25,28 +25,19 @@ export default class App extends Component<IProps, IState> {
             url: 'http://localhost:3001'
         };
 
-        this.eventSource = new EventSource("http://localhost:3001/data/mocked-events");
+
         this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
-        this.eventSource.addEventListener("closedConnection", e =>
-            this.stopUpdates()
-        );
-
-        this.eventSource.onmessage = e =>
-            this.updateDroneState(JSON.parse(e.data));
-    }
-
-    stopUpdates() {
-        this.eventSource.close();
+        new TelemetryService(this.state.url)
+            .onTelemetetryReceived((tel: TelemetryDto) => this.setState({droneStatus: tel}));
     }
 
 
     handleChange(event: any) {
         if (event && event.target) {
             this.setState({
-                ...this.state,
                 url: event && event.target && event.target.value
             });
         }
@@ -60,14 +51,6 @@ export default class App extends Component<IProps, IState> {
                 <Telemetry droneStatus={this.state.droneStatus}/>
             </div>
         );
-    }
-
-    private updateDroneState(telemetry: TelemetryDto) {
-        this.setState({
-            ...this.state,
-            droneStatus: telemetry
-        });
-
     }
 }
 

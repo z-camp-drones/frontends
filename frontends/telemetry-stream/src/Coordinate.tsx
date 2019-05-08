@@ -1,25 +1,26 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {CoordinateDto} from './telemetry/TelemetryDto';
 import NumberFormat from 'react-number-format';
 import './Coordinate.css';
+import {SigColor} from './SigColorStyle';
 
-export class Coordinate extends Component<{ coordinate: CoordinateDto, label: string }> {
-    render() {
-        return (
-            <div>
-                <label>
-                    Acceleration:
-                </label>
-                <span className='coordinate'>
-                    <NumberFormat value={this.props.coordinate.x} displayType={'text'} decimalScale={2}
-                                  renderText={value => <span className="single-value" id="acc-x">{value}</span>}/>
-                    <NumberFormat value={this.props.coordinate.y} displayType={'text'} decimalScale={2}
-                                  renderText={value => <span className="single-value" id="acc-y">{value}</span>}/>
-                    <NumberFormat value={this.props.coordinate.z} displayType={'text'} decimalScale={2}
-                                  renderText={value => <span className="single-value" id="acc-z">{value}</span>}/>
-                </span>
-            </div>
+const Coordinate = ({coordinate, label}: { coordinate: CoordinateDto, label: string }) => (
+    <div>
+        <label>
+            {label}
+        </label>
+        <span className='coordinate'>
+            <SigColor value={coordinate.x}>
+                <NumberFormat value={coordinate.x} displayType={'text'} decimalScale={2}/>
+            </SigColor>
+            <SigColor value={coordinate.y}>
+                <NumberFormat value={coordinate.y} displayType={'text'} decimalScale={2}/>
+            </SigColor>
+            <SigColor value={coordinate.z}>
+                <NumberFormat value={coordinate.z} displayType={'text'} decimalScale={2}/>
+            </SigColor>
+        </span>
+    </div>
 
-        );
-    }
-}
+);
+export default Coordinate;

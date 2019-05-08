@@ -1,20 +1,24 @@
-import React, {Component} from 'react';
+import React from 'react';
+import './SingleValueTelemetry.css';
 import Tooltip from './Tooltip';
 import NumberFormat from 'react-number-format';
-import './SingleValueTelemetry.css';
+import {SigColor} from './SigColorStyle';
 
-export default class SingleValueTelemetry extends Component<{ value: number, label: string, suffix?: string, description?: string }> {
-    render() {
-        return (
-            <div>
-                <label>
-                    <Tooltip text={this.props.label} tooltip={this.props.description}/>
-                </label>
-                <span>
-                <NumberFormat value={this.props.value} displayType={'text'} decimalScale={2}
-                              suffix={this.props.suffix}/>
-            </span>
-            </div>
-        );
-    }
+interface IProps {
+    label: string;
+    value: number;
+    description?: string;
+    suffix?: string;
 }
+
+const SingleValueTelemetry = ({label, value, description, suffix}: IProps) => (
+    <div>
+        <label>
+            <Tooltip text={label} tooltip={description}/>
+        </label>
+        <SigColor value={value}>
+            <NumberFormat value={value} displayType={'text'} decimalScale={2} suffix={suffix}/>
+        </SigColor>
+    </div>
+);
+export default SingleValueTelemetry;

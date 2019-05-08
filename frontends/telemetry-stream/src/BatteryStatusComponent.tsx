@@ -9,8 +9,6 @@ export class BatteryStatusComponent extends HTMLElement {
     constructor() {
         super();
         this.host = this.getAttribute("host");
-        console.log(`Battery Status: ${this.host}`);
-
     }
 
     static get observedAttributes() {
@@ -38,4 +36,4 @@ export class BatteryStatusComponent extends HTMLElement {
     }
 }
 
-window.customElements.define('battery-status-component',    BatteryStatusComponent);
+window.customElements.define('battery-status-component', BatteryStatusComponent);
