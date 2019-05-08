@@ -1,0 +1,16 @@
+.header {
+    flex-grow: 1;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.host-input-field > label {
+    font-size: 15px;
+}
+
+.host-input-field > div {
+    height: 35px;
+}
