@@ -18,7 +18,6 @@ export class BatteryStatusComponent extends HTMLElement {
     attributeChangedCallback(name: string, oldValue: any, newValue: any) {
         switch (name) {
             case 'host':
-                console.log(`Host changed from ${oldValue} to ${newValue}`);
                 this.host = newValue;
                 this.connectedCallback();
                 break;
