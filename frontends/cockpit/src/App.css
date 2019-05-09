@@ -5,7 +5,24 @@ basic-drone-control {
 }
 
 advanced-drone-control {
-  position: absolute;
-  bottom: 30px;
-  left: 30px;
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+}
+
+video-stream {
+    display: grid;
+    height: 100%;
+}
+
+app-command-log {
+    position: absolute;
+    left: 0;
+    top: 65px;
+}
+
+battery-status-component {
+    position: absolute;
+    left: 200px;
+    top: 70px;
 }

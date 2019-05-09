@@ -24,55 +24,53 @@
 </template>
 
 <script lang="ts">
-  import {Component, Vue} from 'vue-property-decorator';
-  import {ALL_ALLOWED_BASIC_KEYS, ALL_BASIC_MOVEMENTS, TAKEOFF_LAND} from './keys';
-  import {DroneController} from './DroneController';
+import { Component, Vue } from "vue-property-decorator";
+import { ALL_ALLOWED_BASIC_KEYS, ALL_BASIC_MOVEMENTS, TAKEOFF_LAND } from "./keys";
+import { DroneController } from "./DroneController";
 
-  interface KeyControls {
-    [key: number]: boolean;
-  }
+interface KeyControls {
+	[key: number]: boolean;
+}
 
-  @Component
-  export default class BasicDroneControl extends Vue {
-    private controls: KeyControls = {
-      37: false,
-      38: false,
-      39: false,
-      40: false,
-    };
-    private droneController: DroneController;
+@Component
+export default class BasicDroneControl extends Vue {
+	private controls: KeyControls = {
+		37: false,
+		38: false,
+		39: false,
+		40: false,
+	};
+	private droneController: DroneController;
 
-    constructor() {
-      super();
-      this.droneController = new DroneController();
+	constructor() {
+		super();
+		this.droneController = new DroneController();
+	}
+
+	public created() {
+		window.addEventListener('keydown', this.handleKeyDownEvent);
+		window.addEventListener('keyup', this.handleKeyUpEvent);
+	}
+
+	public beforeDestroy() {
+		window.removeEventListener('keydown', this.handleKeyDownEvent);
+		window.removeEventListener('keyup', this.handleKeyUpEvent);
+	}
+
+	private handleKeyDownEvent(event: KeyboardEvent) {
+		if (ALL_ALLOWED_BASIC_KEYS.includes(event.key)) {
+			this.setControlState(event.keyCode, true);
+            this.sendMovementCommand(event.keyCode, 100);
+		}
+	}
+
+	private handleKeyUpEvent(event: KeyboardEvent) {
+		if (ALL_ALLOWED_BASIC_KEYS.includes(event.key)) {
+			this.setControlState(event.keyCode, false);
+            this.sendMovementCommand(event.keyCode, 0);
+		}
     }
-
-    public created() {
-      window.addEventListener('keydown', this.handleKeyDownEvent);
-      window.addEventListener('keyup', this.handleKeyUpEvent);
-    }
-
-    public beforeDestroy() {
-      window.removeEventListener('keydown', this.handleKeyDownEvent);
-      window.removeEventListener('keyup', this.handleKeyUpEvent);
-    }
-
-    private handleKeyDownEvent(event: KeyboardEvent) {
-      if (ALL_ALLOWED_BASIC_KEYS.includes(event.key)) {
-        this.setControlState(event.keyCode, true);
-        this.sendMovementCommand(event.keyCode, 100);
-      }
-    }
-
-    private handleKeyUpEvent(event: KeyboardEvent) {
-      if (ALL_ALLOWED_BASIC_KEYS.includes(event.key)) {
-        this.setControlState(event.keyCode, false);
-        this.sendMovementCommand(event.keyCode, 0);
-      } else if (TAKEOFF_LAND.keyCode === event.keyCode) {
-        this.droneController.sendTakeOffOrLandCommand();
-      }
-    }
-
+        
     private setControlState(keyCode: number, active: boolean) {
       this.controls[keyCode] = active;
     }
@@ -94,7 +92,7 @@
     }
 
     .control-circle {
-        background-color: rgba(214, 214, 214, 0.4);
+        background-color: rgba(214, 214, 214, 0.7);
         width: 100%;
         height: 100%;
         border-radius: 50%;
@@ -108,7 +106,7 @@
         opacity: 0.7;
         width: 25px;
         height: 25px;
-        background: #a8a4a4;
+        background: #6c6c6c;
     }
 
     .arrow.active {

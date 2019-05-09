@@ -111,11 +111,11 @@
     }
 
     .control-circle {
-        background-color: rgba(214, 214, 214, 0.4);
+        background-color: rgba(214, 214, 214, 0.7);
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        border-color: #a8a4a4;
+        border-color: #6c6c6c;
         border-width: 1px;
     }
 
@@ -124,7 +124,7 @@
         position: relative;
         width: 25px;
         height: 25px;
-        color: #a8a4a4;
+        color: #6c6c6c;
     }
 
     .navigation.active {
@@ -154,7 +154,7 @@
     .turn-left {
         width: 20px;
         height: 20px;
-        color: #a8a4a4;
+        color: #6c6c6c;
     }
 
     .turn-right.active,
