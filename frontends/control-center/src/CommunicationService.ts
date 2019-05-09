@@ -19,7 +19,7 @@ export class CommunicationService {
 
 }
 
-export type MovementEvent = 'takeoff_land' | 'movement' | 'emergency';
+export type MovementEvent = 'takeoff_land' | 'movement' | 'emergency' | 'flip';
 
 export interface DroneCustomEvent {
   name: MovementEvent;

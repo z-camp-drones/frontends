@@ -12,13 +12,12 @@ export class CommandLogComponent implements OnInit {
   constructor() {
     document.addEventListener('drone-control-event', (event: CustomEvent) => {
       const customEvent = event.detail as DroneCustomEvent;
-      const state = customEvent.detail;
-      if (state && !state.height && !state.pitch && !state.roll && !state.yaw) {
+      const state = customEvent.detail as DroneState;
+      if (customEvent.name === 'movement' && state && !state.height && !state.pitch && !state.roll && !state.yaw) {
         return;
-      } else {
-        this.events.push(this.beautifyCommand(customEvent));
-        this.scrollToBottom();
       }
+      this.events.push(this.beautifyCommand(customEvent));
+      this.scrollToBottom();
     });
   }
 
@@ -33,25 +32,29 @@ export class CommandLogComponent implements OnInit {
   }
 
   beautifyCommand(event: DroneCustomEvent): string {
-    if (!event.detail) {
+    if (event.name === 'takeoff_land') {
       return 'TAKEOFF or LAND';
+    } else if (event.name === 'flip') {
+      const flipDirection = (event.detail as FlipDirection).direction;
+      return 'FLIP ' + flipDirection;
     }
+    const droneState = event.detail as DroneState;
     let command = '';
-    if (event.detail.pitch || event.detail.roll) {
-      if (event.detail.pitch) {
-        command += event.detail.pitch > 0 ? 'FORWARD ' : 'BACK ';
+    if (droneState.pitch || droneState.roll) {
+      if (droneState.pitch) {
+        command += droneState.pitch > 0 ? 'FORWARD ' : 'BACK ';
       }
-      command += event.detail.pitch && event.detail.roll ? ' & ' : '';
-      if (event.detail.roll) {
-        command += event.detail.roll > 0 ? 'RIGHT ' : 'LEFT ';
+      command += droneState.pitch && droneState.roll ? ' & ' : '';
+      if (droneState.roll) {
+        command += droneState.roll > 0 ? 'RIGHT ' : 'LEFT ';
       }
-    } else if (event.detail.height || event.detail.yaw) {
-      if (event.detail.height) {
-        command += event.detail.height > 0 ? 'UP' : 'DOWN';
+    } else if (droneState.height || droneState.yaw) {
+      if (droneState.height) {
+        command += droneState.height > 0 ? 'UP' : 'DOWN';
       }
-      command += event.detail.height && event.detail.yaw ? ' & ' : '';
-      if (event.detail.yaw) {
-        command += event.detail.yaw > 0 ? 'ROTATE RIGHT' : 'ROTATE LEFT';
+      command += droneState.height && droneState.yaw ? ' & ' : '';
+      if (droneState.yaw) {
+        command += droneState.yaw > 0 ? 'ROTATE RIGHT' : 'ROTATE LEFT';
       }
     }
     return command + ' - SPEED 100';
@@ -59,11 +62,11 @@ export class CommandLogComponent implements OnInit {
 
 }
 
-export type MovementEvent = 'takeoff_land' | 'movement' | 'emergency';
+export type MovementEvent = 'takeoff_land' | 'movement' | 'emergency' | 'flip';
 
 export interface DroneCustomEvent {
   name: MovementEvent;
-  detail: DroneState;
+  detail: DroneState | FlipDirection;
 }
 
 export interface DroneState {
@@ -71,4 +74,8 @@ export interface DroneState {
   roll: number;
   yaw: number;
   height: number;
+}
+
+export interface FlipDirection {
+  direction: string;
 }

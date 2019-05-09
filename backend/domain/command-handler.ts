@@ -4,6 +4,7 @@ import {MovementCommand} from './movement-command';
 import {CommandType} from '../communication/command-type';
 import {Response} from '../communication/response';
 import VideoController from './video-controller';
+import { MovementCommand, FlipCommand } from './commands';
 
 export default class CommandHandler {
 
@@ -14,6 +15,7 @@ export default class CommandHandler {
     this.handleMovementChange = this.handleMovementChange.bind(this);
     this.handleTakeOffOrLand = this.handleTakeOffOrLand.bind(this);
     this.handleEmergencyLand = this.handleEmergencyLand.bind(this);
+    this.handleFlip = this.handleFlip.bind(this);
 
     this.startListeningToClientCommands();
   }
@@ -23,6 +25,7 @@ export default class CommandHandler {
     this.socket.on(CommandType.TAKEOFF_LAND, this.handleTakeOffOrLand);
     this.socket.on(CommandType.MOVEMENT, this.handleMovementChange);
     this.socket.on(CommandType.EMERGENCY, this.handleEmergencyLand);
+    this.socket.on(CommandType.FLIP, this.handleFlip)
   }
 
   private handleConnect() {
@@ -43,5 +46,9 @@ export default class CommandHandler {
 
   private handleEmergencyLand() {
     this.droneController.emergencyLand();
+  }
+
+  private handleFlip(flipCommand: FlipCommand) {
+    this.droneController.flip(flipCommand.direction);
   }
 }

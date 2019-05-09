@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 
 declare global {
   namespace JSX {
-    interface BatteryComponentProps
+    interface DroneStatusComponentProps
       extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>,
         HTMLElement> {
       host: string;
@@ -18,7 +18,8 @@ declare global {
         HTMLElement>;
       'advanced-drone-control': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>,
         HTMLElement>;
-      'battery-status-component': BatteryComponentProps;
+      'battery-status-component': DroneStatusComponentProps;
+      'telemetry-component': DroneStatusComponentProps;
     }
   }
 }
@@ -76,6 +77,7 @@ class App extends Component<IProps, IState> {
           onConnect={this.onConnect}></CockpitHeader>
         <video-stream></video-stream>
         <battery-status-component host={this.state.host}></battery-status-component>
+        <telemetry-component host={this.state.host}></telemetry-component>
         <basic-drone-control></basic-drone-control>
         <advanced-drone-control></advanced-drone-control>
       </div>

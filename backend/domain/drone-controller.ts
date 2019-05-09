@@ -1,4 +1,4 @@
-import {MovementCommand} from './movement-command';
+import {MovementCommand} from './commands';
 import {StateService} from './state-serivce';
 
 const sdk = require('../lib/tellojs');
@@ -43,6 +43,12 @@ export default class DroneController {
         this.stateService.setAirborne(false);
       })
       .catch((e: any) => console.log('Error while emergency landing: ', e));
+  }
+
+  flip(direction: string): void {
+    sdk.control
+      .flip(direction)
+      .catch((e: any) => console.log('Error while flipping: ', e));
   }
 
   private takeOff(): void {
