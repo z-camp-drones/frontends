@@ -14,8 +14,10 @@ import CommandHandler from './domain/command-handler';
 import {getAppPort, getVideoForwardPort, getVideoSocketPort} from './app-config';
 import createVideoStreamServer from './video-stream/video-stream-proxy';
 import VideoController from './domain/video-controller';
+import { StateService } from './domain/state-serivce';
 
 let appSocket: Socket = null;
+let stateService: StateService;
 
 const allowCorsRequests = (app: Router) => {
   app.use((req: Request, res: Response, next: NextFunction) => {
@@ -52,12 +54,13 @@ const createSocket = (server: Server) => require('socket.io')(server);
 
 const configureSocket = (io: Socket) => {
   appSocket = io;
+  stateService = new StateService();
 
   io.on('connection', (socket: Socket) => {
     logger.info('User connected to socket, %s', socket.id);
     socket.broadcast.emit('hi');
 
-    const commandHandler = new CommandHandler(socket, new DroneController());
+    new CommandHandler(socket, new DroneController(stateService));
 
     socket.on('disconnect', () => {
       logger.info('User disconnected from socket %s', socket.id);
