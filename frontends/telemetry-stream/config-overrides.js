@@ -6,8 +6,7 @@ module.exports = function override(config, env) {
     ...config,
     entry: {
       app: config.entry,
-      batteryStatus: ["./src/BatteryStatusComponent.tsx"],
-      telemetryStatus: ["./src/TelemetryComponent.tsx"]
+      components: ["./src/BatteryStatusComponent.tsx", "./src/TelemetryComponent.tsx"]
     }
   };
   newConfig.optimization.splitChunks = {

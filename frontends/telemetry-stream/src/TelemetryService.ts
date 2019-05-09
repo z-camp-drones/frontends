@@ -1,4 +1,4 @@
-import TelemetryDto from "./telemetry/TelemetryDto";
+import TelemetryDto from './telemetry/TelemetryDto';
 
 export default class TelemetryService {
   private eventSource: EventSource | undefined;
@@ -24,10 +24,12 @@ export default class TelemetryService {
 
   private updateEventCallback() {
     if (this.eventSource) {
+
       this.eventSource.onmessage = e => {
         let parse: TelemetryDto = JSON.parse(e.data);
         this.callback(parse);
       };
     }
   }
+
 }
