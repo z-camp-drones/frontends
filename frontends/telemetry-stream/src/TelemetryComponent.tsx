@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BatteryStatus} from './BatteryStatus';
+import Telemetry from './Telemetry';
 
-export class BatteryStatusComponent extends HTMLElement {
+export class TelemetryComponent extends HTMLElement {
   private host: string | null;
 
   constructor() {
@@ -25,7 +25,7 @@ export class BatteryStatusComponent extends HTMLElement {
   }
 
   connectedCallback() {
-    ReactDOM.render(<BatteryStatus url={this.host}/>, this);
+    ReactDOM.render(<Telemetry url={this.host}/>, this);
   }
 
   disconnectedCallback() {
@@ -33,4 +33,4 @@ export class BatteryStatusComponent extends HTMLElement {
   }
 }
 
-window.customElements.define('battery-status-component', BatteryStatusComponent);
+window.customElements.define('telemetry-component', TelemetryComponent);

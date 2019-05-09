@@ -8,18 +8,17 @@ import JSMpeg from './jsmpeg.min';
 })
 export class VideoStreamComponent implements AfterViewInit {
   @ViewChild('videocanvas', {read: ElementRef}) canvas: ElementRef;
+  player: any;
 
   constructor() {
   }
 
+
   ngAfterViewInit(): void {
-    console.log(`On Init`);
     let canvas = this.canvas.nativeElement;
     let wsUrl = 'ws://' + document.location.hostname + ':8083/';
-    console.log(wsUrl);
 
-
-    let player = new JSMpeg.Player(wsUrl, {canvas: canvas});
+    this.player = new JSMpeg.Player(wsUrl, {canvas: canvas});
   }
 
 }
