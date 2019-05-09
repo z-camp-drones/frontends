@@ -33,7 +33,7 @@
   import {library} from '@fortawesome/fontawesome-svg-core';
   import {faAngleDoubleDown, faAngleDoubleUp, faRedo, faUndo} from '@fortawesome/free-solid-svg-icons';
   import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
-  import {DroneController} from './DroneController';
+  import {AdvancedDroneController} from './AdvancedDroneController';
 
   interface KeyControls {
     [key: number]: boolean;
@@ -53,11 +53,11 @@
       83: false,
       87: false,
     };
-    private droneController: DroneController;
+    private droneController: AdvancedDroneController;
 
     constructor() {
       super();
-      this.droneController = new DroneController();
+      this.droneController = new AdvancedDroneController();
     }
 
     public created() {
