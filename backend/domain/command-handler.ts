@@ -1,6 +1,5 @@
 import {Socket} from 'socket.io';
 import DroneController from './drone-controller';
-import {MovementCommand} from './movement-command';
 import {CommandType} from '../communication/command-type';
 import {Response} from '../communication/response';
 import VideoController from './video-controller';
