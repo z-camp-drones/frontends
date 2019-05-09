@@ -1,4 +1,10 @@
+FROM jrottenberg/ffmpeg:3.3-alpine
 FROM node:10
+
+LABEL name="tello-backend"
+
+# copy ffmpeg bins from first image
+COPY --from=0 / /
 
 # Create app directory
 WORKDIR /usr/src/app
