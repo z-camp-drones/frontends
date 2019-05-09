@@ -1,6 +1,6 @@
 import {Movement} from './keys';
 import io from 'socket.io-client';
-import { CommunicationService } from '../../../shared/CommunicationService';
+import { CommunicationService } from '../CommunicationService';
 
 export interface DroneState {
   pitch: number;
