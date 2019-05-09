@@ -5,5 +5,5 @@ interface SigColorProps {
 }
 
 export const SigColor = styled.span<SigColorProps>`
-color: ${ p => p.value < 0 ? 'red' : 'blue'};
+color: ${ p => p.value < 0 ? 'palevioletred' : 'lightblue'};
 `;

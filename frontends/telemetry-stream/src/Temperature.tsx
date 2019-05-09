@@ -11,13 +11,13 @@ export const Temperature = function ({temperature}: { temperature: TemperatureDt
   return (<div>
     <label>Temperature</label>
     <span>
-                        <NumberFormat value={fahrenheitToCelsius(temperature.low)} displayType={'text'}
-                                      decimalScale={2}
-                                      suffix='°C'/>
-                        -
-                        <NumberFormat value={fahrenheitToCelsius(temperature.high)} displayType={'text'}
-                                      decimalScale={2}
-                                      suffix='°C'/>
+      <NumberFormat value={fahrenheitToCelsius(temperature.low)} displayType={'text'}
+                    decimalScale={2}
+                    suffix='°C'/>
+      &nbsp;-&nbsp;
+      <NumberFormat value={fahrenheitToCelsius(temperature.high)} displayType={'text'}
+                    decimalScale={2}
+                    suffix='°C'/>
                     </span>
   </div>);
 };

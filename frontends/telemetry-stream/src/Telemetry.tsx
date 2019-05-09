@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
-import './Telemetry.css';
 
 import 'typeface-roboto';
 import 'material-icons/iconfont/material-icons.css';
-import SingleValueTelemetry from './SingleValueTelemetry';
-import {Temperature} from './Temperature';
 import styled from 'styled-components';
-import Coordinate from './Coordinate';
 import TelemetryDto from './telemetry/TelemetryDto';
 import TelemetryService from './TelemetryService';
 import {ControlBlockStyle} from './styles/ControlBlockStyle';
+import TelemetryData from './TelemetryData';
 
 interface IProps {
   url: string | null;
@@ -51,35 +48,18 @@ export default class Telemetry extends Component<IProps, IState> {
   }
 
   render() {
-    if (!this.state.droneStatus) {
-      return (<ControlBlockStyle><NoDroneData>No Drone Status available yet.</NoDroneData></ControlBlockStyle>);
-    }
     let droneStatus = this.state.droneStatus;
-    return (<ControlBlockStyle>
-      <h1>Telemetry Data</h1>
+    return (
+      <ControlBlockStyle>
+        <h1>Telemetry Data</h1>
+        {droneStatus !== null || (<NoDroneData>No Drone Status available yet.</NoDroneData>)}
 
-      <Coordinate coordinate={droneStatus.acceleration} label='Acceleration'/>
-      <Coordinate coordinate={droneStatus.speed} label='Speed'/>
-
-      <SingleValueTelemetry value={droneStatus.barometer} label='Barometer' suffix='hPa'/>
-      <SingleValueTelemetry value={droneStatus.battery} label='Battery' suffix='%'/>
-      <SingleValueTelemetry value={droneStatus.heigh} label='Height' suffix='cm'/>
-
-      <SingleValueTelemetry value={droneStatus.pitch} label='Pitch' suffix='°'/>
-      <SingleValueTelemetry value={droneStatus.roll} label='Roll' suffix='°C'/>
-      <SingleValueTelemetry value={droneStatus.yaw} label='Yaw' suffix='°C'/>
-
-      <SingleValueTelemetry value={droneStatus.time} label='Time' suffix='s' description='Motors on time'/>
-      <SingleValueTelemetry value={droneStatus.tof} label='Time of Flight' suffix='s'/>
-
-      <Temperature temperature={droneStatus.temperature}/>
-
-    </ControlBlockStyle>);
+        {droneStatus === null || (<TelemetryData droneData={droneStatus}></TelemetryData>)}
+      </ControlBlockStyle>
+    );
   }
 
   private updateDroneState(droneStatus: TelemetryDto) {
-    this.setState({
-      droneStatus: droneStatus,
-    });
+    this.setState({droneStatus: droneStatus});
   }
 }
