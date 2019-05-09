@@ -3,7 +3,6 @@ import logger from '../commons/logging/logger';
 const WebSocket = require('ws');
 const http = require('http');
 
-
 let createSocketServer = (websocketPort: number) => {
 
   logger.info(`Creating new WebsocketServer on Port ${websocketPort}`);
