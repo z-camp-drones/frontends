@@ -16,7 +16,7 @@ export default class VideoController {
   }
 
   startFfmpeg() {
-    logger.info(`Start Ffmpeg`);
+    logger.info(`Start Ffmpeg...`);
     const ffmpeg_spawn = {
       'command': 'ffmpeg',
       'args': [
