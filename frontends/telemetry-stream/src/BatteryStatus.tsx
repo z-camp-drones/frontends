@@ -3,7 +3,7 @@ import SingleValueTelemetry from './SingleValueTelemetry';
 import TelemetryDto, {TemperatureDto} from './telemetry/TelemetryDto';
 import TelemetryService from './TelemetryService';
 import {Temperature} from './Temperature';
-import {ControlBlockStyle} from './styles/ControlBlockStyle';
+import {BatteryControlBlockStyle} from './styles/BatteryControlBlockStyle';
 
 interface IProps {
   url: string | null;
@@ -47,7 +47,7 @@ export class BatteryStatus extends Component<IProps, IState> {
     }
     if (this.state.battery) {
       return (
-        <ControlBlockStyle>
+        <BatteryControlBlockStyle>
           <SingleValueTelemetry
             value={this.state.battery}
             label="Battery"
@@ -56,7 +56,7 @@ export class BatteryStatus extends Component<IProps, IState> {
           {!this.state.temperature || (
             <Temperature temperature={this.state.temperature}/>
           )}
-        </ControlBlockStyle>
+        </BatteryControlBlockStyle>
       );
     }
   }

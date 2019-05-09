@@ -10,7 +10,7 @@ interface IProps {
 }
 
 const TelemetryData = ({droneData}: IProps) => (
-  <div>
+  <div className="telemetry-data">
     <Coordinate coordinate={droneData.acceleration} label='Acceleration'/>
     <Coordinate coordinate={droneData.speed} label='Speed'/>
 
@@ -22,7 +22,7 @@ const TelemetryData = ({droneData}: IProps) => (
     <FlightStat value={droneData.roll} label='Roll' suffix='°' max={180}/>
     <FlightStat value={droneData.yaw} label='Yaw' suffix='°' max={180}/>
 
-    <SingleValueTelemetry value={droneData.time} label='Time' suffix='s' description='Motors on time'/>
+    <SingleValueTelemetry value={droneData.time} label='Time' suffix='s'/>
     <SingleValueTelemetry value={droneData.tof} label='Time of Flight' suffix='s'/>
 
     <Temperature temperature={droneData.temperature}/>

@@ -1,3 +1,16 @@
+.coordinate-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.coordinate {
+    display: flex;
+    width: 100px;
+    justify-content: space-between;
+    margin-right: 5px;
+}
+
 .coordinate span {
-    padding: 0 5px;
+    flex: 1;
+    padding: 0 2px;
 }

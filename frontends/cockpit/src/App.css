@@ -24,11 +24,11 @@ app-command-log {
 battery-status-component {
   position: absolute;
   left: 200px;
-  top: 70px;
+  top: 65px;
 }
 
 telemetry-component {
   position: absolute;
   right: 10px;
-  top: 90px;
+  top: 65px;
 }

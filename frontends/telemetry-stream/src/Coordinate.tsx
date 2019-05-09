@@ -5,7 +5,7 @@ import './Coordinate.css';
 import {SigColor} from './styles/SigColorStyle';
 
 const Coordinate = ({coordinate, label}: { coordinate: CoordinateDto, label: string }) => (
-    <div>
+    <div className="coordinate-wrapper">
         <label>
             {label}
         </label>

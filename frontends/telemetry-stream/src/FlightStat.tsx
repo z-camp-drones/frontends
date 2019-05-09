@@ -20,6 +20,8 @@ interface BackgroundColorProps {
 
 
 export const BackgroundColor = styled.div<BackgroundColorProps>`
+display : flex;
+justify-content: space-between;
 position: relative;
 &:before{
   content:'';
