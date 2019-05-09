@@ -34,6 +34,8 @@ export class CommandLogComponent implements OnInit {
   beautifyCommand(event: DroneCustomEvent): string {
     if (event.name === 'takeoff_land') {
       return 'TAKEOFF or LAND';
+    } else if (event.name === 'emergency') {
+      return 'Emergency';
     } else if (event.name === 'flip') {
       const flipDirection = (event.detail as FlipDirection).direction;
       return 'FLIP ' + flipDirection;
