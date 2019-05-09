@@ -11,6 +11,7 @@ enum MovementCommands {
   MOVEMENT = 'movement',
   TAKEOFF_LAND = 'takeoff_land',
   EMERGENCY = 'emergency',
+  FLIP = 'flip',
 }
 
 export class BasicDroneController {
@@ -33,13 +34,8 @@ export class BasicDroneController {
     this.communicationService.dispatchEvent(MovementCommands.MOVEMENT, this.droneState);
   }
 
-  public sendTakeOffOrLandCommand() {
-    this.socket.emit(MovementCommands.TAKEOFF_LAND, {});
-    this.communicationService.dispatchEvent(MovementCommands.TAKEOFF_LAND);
-  }
-
-  public sendEmergencyCommand() {
-    this.socket.emit(MovementCommands.EMERGENCY, {});
-    this.communicationService.dispatchEvent(MovementCommands.EMERGENCY);
+  public sendFlipCommand(direction: string) {
+    this.socket.emit(MovementCommands.FLIP, { direction });
+    this.communicationService.dispatchEvent(MovementCommands.FLIP, { direction });
   }
 }

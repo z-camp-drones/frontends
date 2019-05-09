@@ -10,3 +10,7 @@ export interface MovementCommand {
   yaw?: number;
   height?: number;
 }
+
+export interface FlipCommand {
+  direction: string;
+}

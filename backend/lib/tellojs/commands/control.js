@@ -42,10 +42,5 @@ module.exports = {
     curve,
     move: { up, down, left, right, back, front },
     rotate: { clockwise, counterClockwise },
-    flip: {
-        left: () => flip('l'),
-        right: () => flip('r'),
-        back: () => flip('b'),
-        front: () => flip('f'),
-    } 
+    flip,
 }

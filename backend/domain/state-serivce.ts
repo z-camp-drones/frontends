@@ -1,4 +1,4 @@
-import { MovementCommand } from "./movement-command";
+import { MovementCommand } from "./commands";
 
 export class StateService {
   private droneIsAirborne = false;
