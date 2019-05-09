@@ -1,6 +1,6 @@
 import logger from '../commons/logging/logger';
-import * as WebSocket from 'ws';
 
+const WebSocket = require('ws');
 const http = require('http');
 
 
@@ -10,7 +10,7 @@ let createSocketServer = (websocketPort: number) => {
   const socketServer = new WebSocket.Server({port: websocketPort, perMessageDeflate: false});
   let connectionCount = 0;
 
-  socketServer.on('connection', (socket: WebSocket) => {
+  socketServer.on('connection', (socket: any) => {
     connectionCount++;
     logger.info(`New WebSocket Connection: (${connectionCount} total)`);
     socket.on('close', (code: number, message: string) => {

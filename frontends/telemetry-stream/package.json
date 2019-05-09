@@ -20,6 +20,7 @@
     "http-server": "http-server -p 8082 ./build",
     "serve": "npm run http-server",
     "serve-element": "npm run build",
+    "serve-element:live": "PORT=8082 react-app-rewired start",
     "build-element": "npm run build"
   },
   "eslintConfig": {
