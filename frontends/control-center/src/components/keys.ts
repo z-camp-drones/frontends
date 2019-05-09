@@ -11,12 +11,14 @@ export interface AdvancedMovement extends Movement {
 }
 
 export interface BasicMovement extends Movement {
+  flipDirection: string;
   adaptDroneState: (state: BasicDroneState, value: number) => BasicDroneState;
 }
 
 const FORWARD: BasicMovement = {
   key: 'ArrowUp',
   keyCode: 38,
+  flipDirection: 'f',
   adaptDroneState(state: BasicDroneState, value: number) {
     return {
       ...state,
@@ -27,6 +29,7 @@ const FORWARD: BasicMovement = {
 const BACK: BasicMovement = {
   key: 'ArrowDown',
   keyCode: 40,
+  flipDirection: 'b',
   adaptDroneState(state: BasicDroneState, value: number) {
     return {
       ...state,
@@ -37,6 +40,7 @@ const BACK: BasicMovement = {
 const LEFT: BasicMovement = {
   key: 'ArrowLeft',
   keyCode: 37,
+  flipDirection: 'l',
   adaptDroneState(state: BasicDroneState, value: number) {
     return {
       ...state,
@@ -47,6 +51,7 @@ const LEFT: BasicMovement = {
 const RIGHT: BasicMovement = {
   key: 'ArrowRight',
   keyCode: 39,
+  flipDirection: 'r',
   adaptDroneState(state: BasicDroneState, value: number) {
     return {
       ...state,

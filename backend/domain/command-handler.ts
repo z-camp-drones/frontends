@@ -1,6 +1,6 @@
 import {Socket} from 'socket.io';
 import DroneController from './drone-controller';
-import {MovementCommand} from './movement-command';
+import { MovementCommand, FlipCommand } from './commands';
 import {CommandType} from './command-type';
 
 export default class CommandHandler {
@@ -11,6 +11,7 @@ export default class CommandHandler {
     this.handleMovementChange = this.handleMovementChange.bind(this);
     this.handleTakeOffOrLand = this.handleTakeOffOrLand.bind(this);
     this.handleEmergencyLand = this.handleEmergencyLand.bind(this);
+    this.handleFlip = this.handleFlip.bind(this);
 
     this.startListeningToClientCommands();
   }
@@ -19,6 +20,7 @@ export default class CommandHandler {
     this.socket.on(CommandType.TAKEOFF_LAND, this.handleTakeOffOrLand);
     this.socket.on(CommandType.MOVEMENT, this.handleMovementChange);
     this.socket.on(CommandType.EMERGENCY, this.handleEmergencyLand);
+    this.socket.on(CommandType.FLIP, this.handleFlip)
   }
 
   private handleMovementChange(command: MovementCommand) {
@@ -31,5 +33,9 @@ export default class CommandHandler {
 
   private handleEmergencyLand() {
     this.droneController.emergencyLand();
+  }
+
+  private handleFlip(flipCommand: FlipCommand) {
+    this.droneController.flip(flipCommand.direction);
   }
 }
