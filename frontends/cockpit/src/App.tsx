@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import CockpitHeader from './header/CockpitHeader';
+import io from 'socket.io-client';
 
 declare global {
   namespace JSX {
@@ -27,14 +28,29 @@ interface IProps {
 
 interface IState {
   host: string;
+  connectedToDrone: boolean;
 }
 
 class App extends Component<IProps, IState> {
 
+  private readonly host = 'http://localhost:3001';
+  private readonly socket: SocketIOClient.Socket;
+
   constructor(props: IProps) {
     super(props);
-    this.state = {host: 'http://localhost:3001'};
+    this.socket = io(this.host);
+
+    this.state = {
+      host: this.host,
+      connectedToDrone: false
+    };
+
+    this.socket.on('connection_successful', () => {
+      this.setState({connectedToDrone: true});
+    });
+
     this.handleHostChange = this.handleHostChange.bind(this);
+    this.onConnect = this.onConnect.bind(this);
   }
 
   handleHostChange(event: any) {
@@ -46,11 +62,18 @@ class App extends Component<IProps, IState> {
     }
   }
 
+  onConnect() {
+    this.socket.emit('init_connection', {});
+  }
+
   render() {
     return (
       <div>
         <CockpitHeader
-          host={this.state.host} onHostChange={this.handleHostChange}></CockpitHeader>
+          host={this.state.host}
+          droneConnected={this.state.connectedToDrone}
+          onHostChange={this.handleHostChange}
+          onConnect={this.onConnect}></CockpitHeader>
         <video-stream></video-stream>
         <battery-status-component host={this.state.host}></battery-status-component>
         <basic-drone-control></basic-drone-control>

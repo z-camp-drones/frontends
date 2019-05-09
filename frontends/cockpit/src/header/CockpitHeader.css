@@ -7,6 +7,19 @@
   justify-content: space-between;
 }
 
+.connection-widget {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.connection-status {
+  width: 100px;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
 .host-input-field > label {
   font-size: 15px;
 }

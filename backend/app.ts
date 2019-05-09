@@ -60,7 +60,7 @@ const configureSocket = (io: Socket) => {
     logger.info('User connected to socket, %s', socket.id);
     socket.broadcast.emit('hi');
 
-    new CommandHandler(socket, new DroneController(stateService));
+    new CommandHandler(socket, new DroneController(stateService), new VideoController());
 
     socket.on('disconnect', () => {
       logger.info('User disconnected from socket %s', socket.id);
@@ -88,8 +88,6 @@ const create = (port: number) => {
   const server = createHttpServer(app);
   const io = createSocket(server);
   configureSocket(io);
-
-  new VideoController();
 
   server.listen(port, () => {
     logger.warn('The server is running on: http://localhost:%s ', port);

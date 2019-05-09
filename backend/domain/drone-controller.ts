@@ -1,12 +1,15 @@
 import {MovementCommand} from './movement-command';
-import { StateService } from './state-serivce';
+import {StateService} from './state-serivce';
 
 const sdk = require('../lib/tellojs');
 
 export default class DroneController {
 
   constructor(private stateService: StateService) {
-    sdk.control.connect()
+  }
+
+  connect() {
+    return sdk.control.connect()
       .then(() => console.log('Connected to drone'))
       .catch((e: any) => console.log('Error connecting to drone:', e));
   }

@@ -6,16 +6,13 @@ const {spawn} = require('child_process');
 
 export default class VideoController {
 
-  constructor() {
-    sdk.control
-      .connect()
-      .then(() => logger.info('Connected to drone'))
-      .then(() => sdk.receiver.video.streamOn())
+  startVideoStream() {
+    sdk.receiver.video.streamOn()
       .then(() => this.startFfmpeg())
-      .catch((e: any) => logger.warn('Error connecting to drone and video:', e));
+      .catch((e: any) => logger.error('Error starting video stream', e));
   }
 
-  startFfmpeg() {
+  private startFfmpeg() {
     logger.info(`Start Ffmpeg`);
     const ffmpeg_spawn = {
       'command': 'ffmpeg',
