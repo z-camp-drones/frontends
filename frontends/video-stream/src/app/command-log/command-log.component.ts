@@ -1,4 +1,3 @@
-import { DroneCustomEvent } from './../../../../shared/CommunicationService';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -33,4 +32,18 @@ export class CommandLogComponent implements OnInit {
     });
   }
 
+}
+
+export type MovementEvent = 'takeoff_land' | 'movement' | 'emergency';
+
+export interface DroneCustomEvent {
+  name: MovementEvent;
+  detail: DroneState;
+}
+
+export interface DroneState {
+  pitch: number;
+  roll: number;
+  yaw: number;
+  height: number;
 }
