@@ -43,7 +43,7 @@ class App extends Component<IProps, IState> {
 
     this.state = {
       host: this.host,
-      connectedToDrone: false
+      connectedToDrone: false,
     };
 
     this.socket.on('connection_successful', () => {
