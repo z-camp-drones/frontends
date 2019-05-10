@@ -78,8 +78,8 @@
       }
     }
 
-    private handleSpeedChangeEvent(event: CustomEvent) {
-      this.droneController.sendSpeedChangeCommand(event.detail);
+    private handleSpeedChangeEvent(event: Event) {
+      this.droneController.sendSpeedChangeCommand((event as CustomEvent).detail);
     }
 
     private setControlState(keyCode: number, active: boolean) {

@@ -21,8 +21,8 @@ export class CommandLogComponent implements OnInit {
       this.scrollToBottom();
     });
 
-    document.addEventListener('drone-speed-change-event', (event: CustomEvent) => {
-      this.speed = event.detail;
+    document.addEventListener('drone-speed-change-event', (event: Event) => {
+      this.speed = (event as CustomEvent).detail;
     });
   }
 
