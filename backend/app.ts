@@ -30,7 +30,6 @@ const allowCorsRequests = (app: Router) => {
   });
 };
 
-
 const allowStaticFilesServing = (app: Router) => {
   app.use(express.static(path.join('public')));
 };

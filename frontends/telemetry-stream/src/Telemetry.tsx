@@ -52,9 +52,10 @@ export default class Telemetry extends Component<IProps, IState> {
     return (
       <ControlBlockStyle>
         <div className="telemetry-title">Telemetry Data</div>
-        {droneStatus !== null || (<NoDroneData>No Drone Status available yet.</NoDroneData>)}
-
-        {droneStatus === null || (<TelemetryData droneData={droneStatus}></TelemetryData>)}
+        {droneStatus !== null ?
+          <NoDroneData>No Drone Status available yet.</NoDroneData> :
+          <TelemetryData droneData={droneStatus}></TelemetryData>
+        }
       </ControlBlockStyle>
     );
   }

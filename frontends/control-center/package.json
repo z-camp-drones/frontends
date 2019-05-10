@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "serve-element": "vue-cli-service build --target wc --name control-center ./src/App.vue --watch",
-    "serve-element:live": "vue-cli-service build --target wc --name control-center ./src/App.vue --watch & npm run http-server",
+    "serve-element:live": "npm run serve-element & npm run http-server",
     "build-element": "vue-cli-service build --target wc --name control-center ./src/App.vue",
     "http-server": "http-server -p 8081 ./dist"
   },

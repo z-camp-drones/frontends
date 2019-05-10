@@ -10,7 +10,9 @@ RUN npm install
 
 COPY . .
 
+RUN npm run build-element
+
 # Server
 EXPOSE 3000
 
-CMD [ "npm", "start"]
+CMD [ "npm", "run", "http-server"]
