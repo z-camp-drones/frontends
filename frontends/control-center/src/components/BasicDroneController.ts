@@ -5,6 +5,7 @@ import { CommunicationService } from '../CommunicationService';
 export interface BasicDroneState {
   pitch: number;
   roll: number;
+  speed: number;
 }
 
 enum MovementCommands {
@@ -24,6 +25,7 @@ export class BasicDroneController {
     this.droneState = {
       pitch: 0,
       roll: 0,
+      speed: 100,
     };
     this.communicationService = new CommunicationService();
   }
@@ -37,5 +39,14 @@ export class BasicDroneController {
   public sendFlipCommand(direction: string) {
     this.socket.emit(MovementCommands.FLIP, { direction });
     this.communicationService.dispatchEvent(MovementCommands.FLIP, { direction });
+  }
+
+  public sendSpeedChangeCommand(speed: number) {
+    this.droneState.speed = speed;
+    this.socket.emit('speed_change', {speed: speed});
+  }
+
+  public getCurrentSpeed() {
+    return this.droneState.speed;
   }
 }

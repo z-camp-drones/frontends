@@ -32,3 +32,9 @@ telemetry-component {
   right: 10px;
   top: 65px;
 }
+
+.speed-slider {
+  position: absolute;
+  left: calc(50% - 125px);
+  bottom: 70px;
+}

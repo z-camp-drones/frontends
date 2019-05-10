@@ -5,6 +5,7 @@ import { CommunicationService } from '../CommunicationService';
 export interface AdvancedDroneState {
   yaw: number;
   height: number;
+  speed: number;
 }
 
 enum MovementCommands {
@@ -23,6 +24,7 @@ export class AdvancedDroneController {
     this.droneState = {
       yaw: 0,
       height: 0,
+      speed: 100,
     };
     this.communicationService = new CommunicationService();
   }
@@ -41,5 +43,14 @@ export class AdvancedDroneController {
   public sendEmergencyCommand() {
     this.socket.emit(MovementCommands.EMERGENCY, {});
     this.communicationService.dispatchEvent(MovementCommands.EMERGENCY);
+  }
+
+  public sendSpeedChangeCommand(speed: number) {
+    this.droneState.speed = speed;
+    this.socket.emit('speed_change', {speed: speed});
+  }
+
+  public getCurrentSpeed() {
+    return this.droneState.speed;
   }
 }

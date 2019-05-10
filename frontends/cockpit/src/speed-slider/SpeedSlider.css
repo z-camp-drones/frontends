@@ -1,0 +1,13 @@
+.slider {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  padding: 0 20px;
+  height: 30px;
+  justify-content: center;
+  background-color: rgba(214, 214, 214, 0.7);
+  border-radius: 15px;
+  border-color: #a8a4a4;
+  border-width: 1px;
+}
+

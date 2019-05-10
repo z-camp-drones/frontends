@@ -14,3 +14,7 @@ export interface MovementCommand {
 export interface FlipCommand {
   direction: string;
 }
+
+export interface SpeedChangeCommand {
+  speed: number;
+}

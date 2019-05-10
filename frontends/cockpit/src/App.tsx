@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import './App.css';
 import CockpitHeader from './header/CockpitHeader';
+import SpeedSlider from './speed-slider/SpeedSlider';
 import io from 'socket.io-client';
+
 
 declare global {
   namespace JSX {
@@ -52,6 +54,8 @@ class App extends Component<IProps, IState> {
 
     this.handleHostChange = this.handleHostChange.bind(this);
     this.onConnect = this.onConnect.bind(this);
+    this.onSpeedChange = this.onSpeedChange.bind(this);
+    this.dispatchSpeedChangeEvent = this.dispatchSpeedChangeEvent.bind(this);
   }
 
   handleHostChange(event: any) {
@@ -68,6 +72,18 @@ class App extends Component<IProps, IState> {
     this.socket.emit('init_connection', {});
   }
 
+  onSpeedChange(droneSpeed: number) {
+    this.dispatchSpeedChangeEvent(droneSpeed);
+  }
+
+  dispatchSpeedChangeEvent(droneSpeed: number) {
+    document.dispatchEvent(
+      new CustomEvent('drone-speed-change-event', {
+        detail: droneSpeed,
+      })
+    );
+  }
+
   render() {
     return (
       <div>
@@ -80,10 +96,14 @@ class App extends Component<IProps, IState> {
         <battery-status-component host={this.state.host}></battery-status-component>
         <telemetry-component host={this.state.host}></telemetry-component>
         <basic-drone-control></basic-drone-control>
+        <div className="speed-slider">
+          <SpeedSlider onChange={this.onSpeedChange}></SpeedSlider>
+        </div>
         <advanced-drone-control></advanced-drone-control>
       </div>
     );
   }
 }
+
 
 export default App;

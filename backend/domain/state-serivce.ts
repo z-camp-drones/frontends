@@ -7,7 +7,7 @@ export class StateService {
     pitch: 0,
     height: 0,
     yaw: 0,
-  }
+  };
 
   updateDroneState(command: MovementCommand) {
     this.droneState = {
