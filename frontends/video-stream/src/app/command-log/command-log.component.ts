@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-command-log',
   templateUrl: './command-log.component.html',
-  styleUrls: ['./command-log.component.scss']
+  styleUrls: ['./command-log.component.scss'],
 })
 export class CommandLogComponent implements OnInit {
 
   events: string[] = [];
+  speed: number = 100;
 
   constructor() {
     document.addEventListener('drone-control-event', (event: CustomEvent) => {
@@ -20,9 +21,8 @@ export class CommandLogComponent implements OnInit {
       this.scrollToBottom();
     });
 
-    // TODO: update commmand log
     document.addEventListener('drone-speed-change-event', (event: CustomEvent) => {
-      console.log('New drone speed:', event.detail);
+      this.speed = event.detail;
     });
   }
 
@@ -64,7 +64,7 @@ export class CommandLogComponent implements OnInit {
         command += droneState.yaw > 0 ? 'ROTATE RIGHT' : 'ROTATE LEFT';
       }
     }
-    return command + ' - SPEED 100';
+    return command + ' - SPEED ' + this.speed;
   }
 
 }
