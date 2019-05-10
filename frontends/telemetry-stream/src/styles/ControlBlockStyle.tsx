@@ -17,7 +17,7 @@ font-size: 12px;
 .telemetry-title {
   font-size: 14px;
   padding: 5px;
-  color: #f5f5f5;
+  color: #f5f5f5; 
   border-bottom: 1px solid #f5f5f5;
 }
 

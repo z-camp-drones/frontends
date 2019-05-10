@@ -18,7 +18,7 @@ router.put(
   singleExecutionAndAsyncHandler(async (req: Request, res: Response) => {
     await sdk.control.connect();
     okResponse(res, 'connected');
-  })
+  }),
 );
 
 router.put(
@@ -27,7 +27,7 @@ router.put(
     console.log('initiate takeoff ...');
     await sdk.control.takeOff();
     okResponse(res, 'took off');
-  })
+  }),
 );
 
 router.put(
@@ -35,7 +35,7 @@ router.put(
   singleExecutionAndAsyncHandler(async (req: Request, res: Response) => {
     await sdk.control.land();
     okResponse(res, 'landed');
-  })
+  }),
 );
 
 router.put(
@@ -43,7 +43,7 @@ router.put(
   asyncMiddleware(async (req: Request, res: Response) => {
     await sdk.control.emergency();
     okResponse(res, 'emergency-stop');
-  })
+  }),
 );
 
 router.put(
@@ -51,7 +51,7 @@ router.put(
   singleExecutionAndAsyncHandler(async (req: Request, res: Response) => {
     await sdk.control.stop();
     okResponse(res, 'stopped');
-  })
+  }),
 );
 
 /**
@@ -74,7 +74,7 @@ router.put(
     }
     await sdk.control.go(to, speed);
     okResponse(res, 'stopped');
-  })
+  }),
 );
 
 router.put(
@@ -90,7 +90,7 @@ router.put(
       await sdk.control.rotate.counterClockwise(Math.abs(degrees));
     }
     okResponse(res, 'rotated', {direction, degrees: Math.abs(degrees)});
-  })
+  }),
 );
 
 // error handler
@@ -98,7 +98,7 @@ router.use((err: any, req: Request, res: Response) => {
   // render the error page
   err = {
     ...err,
-    status: err.status || 500
+    status: err.status || 500,
   };
   res.status(err.status);
   try {
