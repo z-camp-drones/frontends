@@ -51,6 +51,14 @@ export default class DroneController {
       .catch((e: any) => console.log('Error while flipping: ', e));
   }
 
+  changeSpeed(speed: number) {
+    sdk.set.speed(speed)
+      .then(() => {
+        console.log('Changed speed to', speed);
+      })
+      .catch(() => console.log('Error while changing speed to', speed));
+  }
+
   private takeOff(): void {
     return sdk.control
       .takeOff()

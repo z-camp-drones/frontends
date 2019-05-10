@@ -19,6 +19,11 @@ export class CommandLogComponent implements OnInit {
       this.events.push(this.beautifyCommand(customEvent));
       this.scrollToBottom();
     });
+
+    // TODO: update commmand log
+    document.addEventListener('drone-speed-change-event', (event: CustomEvent) => {
+      console.log('New drone speed:', event.detail);
+    });
   }
 
   ngOnInit() {
