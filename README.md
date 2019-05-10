@@ -10,6 +10,22 @@ This repo contains of 4 different apps:
 3. Control-center App - using VueJS
 4. Telemetry-stream App - using ReactJS
 
+## Run with docker
+For a 'non-development' build, please simply run:
+```
+docker-compose build --parallel
+docker-compose up
+```
+
+## Develop with docker
+For a 'development' build (live reloading), please simply run:
+```
+docker-compose -f docker-compose-reload.yml build --parallel
+docker-compose -f docker-compose-reload.yml up
+```
+
+When you modify the `package.json`, you will need to re-build the docker files, as the `node_modules/` folder is not mounted as volume into the docker image.
+
 ## How to run
 
 Follow these steps to start the **Main ReactJS Cockpit App**
