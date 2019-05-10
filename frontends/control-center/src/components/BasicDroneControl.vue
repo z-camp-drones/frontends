@@ -24,122 +24,133 @@
 </template>
 
 <script lang="ts">
-  import {Component, Vue} from 'vue-property-decorator';
-  import {ALL_ALLOWED_BASIC_KEYS, ALL_BASIC_MOVEMENTS, TAKEOFF_LAND} from './keys';
-  import {DroneController} from './DroneController';
+import { Component, Vue } from "vue-property-decorator";
+import { ALL_ALLOWED_BASIC_KEYS, ALL_BASIC_MOVEMENTS, TAKEOFF_LAND } from "./keys";
+import { BasicDroneController } from "./BasicDroneController";
 
-  interface KeyControls {
-    [key: number]: boolean;
-  }
+interface KeyControls {
+	[key: number]: boolean;
+}
 
-  @Component
-  export default class BasicDroneControl extends Vue {
-    private controls: KeyControls = {
-      37: false,
-      38: false,
-      39: false,
-      40: false,
-    };
-    private droneController: DroneController;
+@Component
+export default class BasicDroneControl extends Vue {
+	private controls: KeyControls = {
+		37: false,
+		38: false,
+		39: false,
+		40: false,
+	};
+	private droneController: BasicDroneController;
 
-    constructor() {
-      super();
-      this.droneController = new DroneController();
-    }
+	constructor() {
+		super();
+		this.droneController = new BasicDroneController();
+	}
 
-    public created() {
-      window.addEventListener('keydown', this.handleKeyDownEvent);
-      window.addEventListener('keyup', this.handleKeyUpEvent);
-    }
+	public created() {
+		window.addEventListener('keydown', this.handleKeyDownEvent);
+		window.addEventListener('keyup', this.handleKeyUpEvent);
+	}
 
-    public beforeDestroy() {
-      window.removeEventListener('keydown', this.handleKeyDownEvent);
-      window.removeEventListener('keyup', this.handleKeyUpEvent);
-    }
+	public beforeDestroy() {
+		window.removeEventListener('keydown', this.handleKeyDownEvent);
+		window.removeEventListener('keyup', this.handleKeyUpEvent);
+	}
 
-    private handleKeyDownEvent(event: KeyboardEvent) {
-      if (ALL_ALLOWED_BASIC_KEYS.includes(event.key)) {
-        this.setControlState(event.keyCode, true);
+	private handleKeyDownEvent(event: KeyboardEvent) {
+		if (ALL_ALLOWED_BASIC_KEYS.includes(event.key)) {
+      if (!event.shiftKey) {
+			  this.setControlState(event.keyCode, true);
         this.sendMovementCommand(event.keyCode, 100);
       }
-    }
+		}
+	}
 
-    private handleKeyUpEvent(event: KeyboardEvent) {
-      if (ALL_ALLOWED_BASIC_KEYS.includes(event.key)) {
+	private handleKeyUpEvent(event: KeyboardEvent) {
+		if (ALL_ALLOWED_BASIC_KEYS.includes(event.key)) {
+      if (event.shiftKey) {
+        this.sendFlipCommand(event.keyCode);
+      } else {
         this.setControlState(event.keyCode, false);
         this.sendMovementCommand(event.keyCode, 0);
-      } else if (TAKEOFF_LAND.keyCode === event.keyCode) {
-        this.droneController.sendTakeOffOrLandCommand();
       }
-    }
+		}
+  }
+      
+  private setControlState(keyCode: number, active: boolean) {
+    this.controls[keyCode] = active;
+  }
 
-    private setControlState(keyCode: number, active: boolean) {
-      this.controls[keyCode] = active;
-    }
-
-    private sendMovementCommand(keyCode: number, value: number) {
-      const movement = ALL_BASIC_MOVEMENTS.find(mov => mov.keyCode === keyCode);
-      if (movement) {
-        this.droneController.sendMovementCommand(movement, value);
-      }
+  private sendMovementCommand(keyCode: number, value: number) {
+    const movement = ALL_BASIC_MOVEMENTS.find(mov => mov.keyCode === keyCode);
+    if (movement) {
+      this.droneController.sendMovementCommand(movement, value);
     }
   }
+
+  private sendFlipCommand(keyCode: number) {
+    const movement = ALL_BASIC_MOVEMENTS.find(mov => mov.keyCode === keyCode);
+    if (movement) {
+      this.droneController.sendFlipCommand(movement.flipDirection);
+    }
+  }
+}
 </script>
 
 <style scoped>
-    .basic-drone-control {
-        height: 100px;
-        width: 100px;
-        text-align: center;
-    }
+.basic-drone-control {
+	height: 100px;
+	width: 100px;
+	text-align: center;
+}
 
-    .control-circle {
-        background-color: rgba(214, 214, 214, 0.4);
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        border-color: #a8a4a4;
-        border-width: 1px;
-    }
+.control-circle {
+	background-color: rgba(214, 214, 214, 0.7);
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	border-color: #a8a4a4;
+	border-width: 1px;
+}
 
-    .arrow {
-        display: inline-block;
-        position: relative;
-        opacity: 0.7;
-        width: 25px;
-        height: 25px;
-        background: #a8a4a4;
-    }
+.arrow {
+	display: inline-block;
+	position: relative;
+	opacity: 0.7;
+	width: 25px;
+	height: 25px;
+	background: #6c6c6c;
+}
 
-    .arrow.active {
-        background: #f67373;
-    }
+.arrow.active {
+	background: #f67373;
+}
 
-    .arrow-up {
-        margin-left: auto;
-        margin-right: auto;
-        top: 5px;
-        clip-path: polygon(50% 0, 0 100%, 100% 100%);
-    }
+.arrow-up {
+	margin-left: auto;
+	margin-right: auto;
+	top: 5px;
+	clip-path: polygon(50% 0, 0 100%, 100% 100%);
+}
 
-    .arrow-down {
-        margin-left: auto;
-        margin-right: auto;
-        top: 9px;
-        clip-path: polygon(100% 0, 0 0, 50% 100%);
-    }
+.arrow-down {
+	margin-left: auto;
+	margin-right: auto;
+	top: 9px;
+	clip-path: polygon(100% 0, 0 0, 50% 100%);
+}
 
-    .middle-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 7px 5px 0 5px;
-    }
+.middle-row {
+	display: flex;
+	justify-content: space-between;
+	padding: 7px 5px 0 5px;
+}
 
-    .arrow-left {
-        clip-path: polygon(100% 0, 0 50%, 100% 100%);
-    }
+.arrow-left {
+	clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
 
-    .arrow-right {
-        clip-path: polygon(0 0, 100% 50%, 0 100%);
-    }
+.arrow-right {
+	clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
 </style>

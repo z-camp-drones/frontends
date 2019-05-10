@@ -2,50 +2,51 @@ version: "3.0"
 services:
   backend:
     build: backend
-    volumes:
-      - "./backend:/usr/src/app"
-      - "/usr/src/app/node_modules"
+    #    volumes:
+    #    - "./backend:/usr/src/app"
+    #    - "/usr/src/app/node_modules"
     ports:
-      - "3001:3000"
-      - "8889:8889/udp"
-      - "8001:8001/udp"
-      - "8890:8890/udp"
-      - "11111:11111/udp"
+    - "3001:3001"
+    - "8083:8083"
+    - "8889:8889/udp"
+    - "8001:8001/udp"
+    - "8890:8890/udp"
+    - "11111:11111/udp"
   cockpit:
     build: frontends/cockpit
     depends_on:
-      - video-stream
-      - control-center
-      - telemetry-stream
+    - video-stream
+    - control-center
+    - telemetry-stream
     ports:
-      - "80:3000"
-    volumes:
-      - "./frontends/cockpit:/usr/src/app"
-      - "/usr/src/app/node_modules"
+    - "80:3000"
+  #    volumes:
+  #    - "./frontends/cockpit:/usr/src/app"
+  #    - "/usr/src/app/node_modules"
   video-stream:
     build: frontends/video-stream
-    volumes:
-      - "./frontends/video-stream:/usr/src/app"
-      - "/usr/src/app/node_modules"
+    #    volumes:
+    #    - "./frontends/video-stream:/usr/src/app"
+    #    - "/usr/src/app/node_modules"
     depends_on:
-      - backend
+    - backend
     ports:
-      - "8080:8080"
+    - "8080:8080"
   control-center:
     build: frontends/control-center
     depends_on:
-      - backend
+    - backend
     ports:
-      - "8081:8081"
-    volumes:
-      - "./frontends/control-center:/usr/src/app"
-      - "/usr/src/app/node_modules"
+    - "8081:8081"
+  #    volumes:
+  #    - "./frontends/control-center:/usr/src/app"
+  #    - "/usr/src/app/node_modules"
   telemetry-stream:
     build: frontends/telemetry-stream
     depends_on:
-      - backend
+    - backend
     ports:
-      - "8082:3000"
-    volumes:
-      - "./frontends/telemetry-stream:/usr/src/app"
-      - "/usr/src/app/node_modules"
+    - "8082:3000"
+#    volumes:
+#    - "./frontends/telemetry-stream:/usr/src/app"
+#    - "/usr/src/app/node_modules"

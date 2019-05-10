@@ -1,8 +1,9 @@
 import {Socket} from 'socket.io';
 import DroneController from './drone-controller';
-import {MovementCommand} from './movement-command';
-import {CommandType} from './command-type';
-import logger from '../commons/logging/logger';
+import {CommandType} from '../communication/command-type';
+import {Response} from '../communication/response';
+import VideoController from './video-controller';
+import { MovementCommand, FlipCommand } from './commands';
 
 interface RecordedCommand {
   timestamp: Date;
@@ -11,27 +12,37 @@ interface RecordedCommand {
 }
 
 export default class CommandHandler {
-  private isRecording: boolean;
+  private isRecording = false;
   private recordedCommands: RecordedCommand[];
 
-  constructor(
-    private socket: Socket,
-    private droneController: DroneController,
-  ) {
-    this.isRecording = false;
+  constructor(private socket: Socket,
+              private droneController: DroneController,
+              private videoController: VideoController) {
+    this.handleConnect = this.handleConnect.bind(this);
     this.handleMovementChange = this.handleMovementChange.bind(this);
     this.handleTakeOffOrLand = this.handleTakeOffOrLand.bind(this);
     this.handleEmergencyLand = this.handleEmergencyLand.bind(this);
+    this.handleFlip = this.handleFlip.bind(this);
 
     this.startListeningToClientCommands();
   }
 
   private startListeningToClientCommands() {
+    this.socket.on(CommandType.CONNECT, this.handleConnect);
     this.socket.on(CommandType.TAKEOFF_LAND, this.handleTakeOffOrLand);
     this.socket.on(CommandType.MOVEMENT, this.handleMovementChange);
     this.socket.on(CommandType.EMERGENCY, this.handleEmergencyLand);
+    this.socket.on(CommandType.FLIP, this.handleFlip);
     this.socket.on(CommandType.START_RECORDING, this.startRecording);
     this.socket.on(CommandType.STOP_RECORDING, this.stopRecording);
+  }
+
+  private handleConnect() {
+    this.droneController.connect()
+      .then(() => {
+        this.socket.emit(Response.CONNECTION_SUCCESSFUL, {});
+        this.videoController.startVideoStream();
+      });
   }
 
   private handleMovementChange(command: MovementCommand) {
@@ -56,6 +67,10 @@ export default class CommandHandler {
       this.recordCommand({timestamp: new Date(), commandType: CommandType.EMERGENCY, movementCommand: null});
     }
     this.droneController.emergencyLand();
+  }
+
+  private handleFlip(flipCommand: FlipCommand) {
+    this.droneController.flip(flipCommand.direction);
   }
 
   private startRecording() {

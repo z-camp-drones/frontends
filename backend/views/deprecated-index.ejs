@@ -8,9 +8,13 @@
           integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
           crossorigin="anonymous"></script>
 
+  <script src="/jsmpeg.min.js"></script>
+
 </head>
 <body>
 <h1>Welcome to Tello Proxy!</h1>
+
+
 <p>The <%= title %> server is ready and will be expecting your tello commands.</p>
 
 <button id="connect" class="control">Connect</button>
@@ -23,6 +27,17 @@
 <button id="sse-stop" hidden>Stop listening to drone data</button>
 
 <script src="/socket.io/socket.io.js"></script>
+
+<br/>
+<br/>
+<br/>
+<canvas id="video-canvas" style="border: thin solid black;"></canvas>
+<script type="text/javascript">
+  var canvas = document.getElementById('video-canvas');
+  var url = 'ws://' + document.location.hostname + ':8082/';
+  var player = new JSMpeg.Player(url, {canvas: canvas});
+</script>
+
 <script>
   var socket = io();
 

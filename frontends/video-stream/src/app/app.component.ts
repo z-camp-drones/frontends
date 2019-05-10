@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
+import { createCustomElement } from '@angular/elements';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,5 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'video-stream';
 
-  constructor() {
-  }
+  constructor() { }
 }

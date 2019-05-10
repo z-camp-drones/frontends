@@ -1,45 +1,65 @@
-import React from 'react';
-import './Telemetry.css';
+import React, {Component} from 'react';
 
 import 'typeface-roboto';
 import 'material-icons/iconfont/material-icons.css';
-import SingleValueTelemetry from './SingleValueTelemetry';
-import {Temperature} from './Temperature';
-import TelemetryDto from './telemetry/TelemetryDto';
 import styled from 'styled-components';
-import Coordinate from './Coordinate';
+import TelemetryDto from './telemetry/TelemetryDto';
+import TelemetryService from './TelemetryService';
+import {ControlBlockStyle} from './styles/ControlBlockStyle';
+import TelemetryData from './TelemetryData';
 
 interface IProps {
-    droneStatus: TelemetryDto | null;
+  url: string | null;
 }
 
 const NoDroneData = styled.div`
 color: red;
 `;
 
-const Telemetry = ({droneStatus}: IProps) => {
-    if (!droneStatus) {
-        return (<NoDroneData>No Drone Status available yet.</NoDroneData>);
-    }
-    return (<div>
-        <h1>Telemetry Data</h1>
+interface IProps {
+  url: string | null;
+}
 
-        <Coordinate coordinate={droneStatus.acceleration} label='Acceleration'/>
-        <Coordinate coordinate={droneStatus.speed} label='Speed'/>
+interface IState {
+  droneStatus: TelemetryDto | null;
+  connectionError: boolean;
+}
 
-        <SingleValueTelemetry value={droneStatus.barometer} label='Barometer' suffix='hPa'/>
-        <SingleValueTelemetry value={droneStatus.battery} label='Battery' suffix='%'/>
-        <SingleValueTelemetry value={droneStatus.heigh} label='Height' suffix='cm'/>
+export default class Telemetry extends Component<IProps, IState> {
+  private service: TelemetryService;
 
-        <SingleValueTelemetry value={droneStatus.pitch} label='Pitch' suffix='°'/>
-        <SingleValueTelemetry value={droneStatus.roll} label='Roll' suffix='°C'/>
-        <SingleValueTelemetry value={droneStatus.yaw} label='Yaw' suffix='°C'/>
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      droneStatus: null,
+      connectionError: false,
+    };
+    this.service = new TelemetryService(this.props.url);
+  }
 
-        <SingleValueTelemetry value={droneStatus.time} label='Time' suffix='s' description='Motors on time'/>
-        <SingleValueTelemetry value={droneStatus.tof} label='Time of Flight' suffix='s'/>
+  componentDidMount() {
+    this.service.onTelemetetryReceived((droneStatus: TelemetryDto) =>
+      this.updateDroneState(droneStatus),
+    );
+  }
 
-        <Temperature temperature={droneStatus.temperature}/>
+  componentWillUpdate() {
+    this.service.updateUrl(this.props.url);
+  }
 
-    </div>)
-};
-export default Telemetry;
+  render() {
+    let droneStatus = this.state.droneStatus;
+    return (
+      <ControlBlockStyle>
+        <div className="telemetry-title">Telemetry Data</div>
+        {droneStatus !== null || (<NoDroneData>No Drone Status available yet.</NoDroneData>)}
+
+        {droneStatus === null || (<TelemetryData droneData={droneStatus}></TelemetryData>)}
+      </ControlBlockStyle>
+    );
+  }
+
+  private updateDroneState(droneStatus: TelemetryDto) {
+    this.setState({droneStatus: droneStatus});
+  }
+}

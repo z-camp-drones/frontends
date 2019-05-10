@@ -11,21 +11,25 @@ import DroneController from './domain/drone-controller';
 
 import {Socket} from 'socket.io';
 import CommandHandler from './domain/command-handler';
+import {getAppPort, getVideoForwardPort, getVideoSocketPort} from './app-config';
+import createVideoStreamServer from './video-stream/video-stream-proxy';
+import VideoController from './domain/video-controller';
+import { StateService } from './domain/state-serivce';
 
 let appSocket: Socket = null;
-
-const APP_PORT: number = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+let stateService: StateService;
 
 const allowCorsRequests = (app: Router) => {
   app.use((req: Request, res: Response, next: NextFunction) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header(
       'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept'
+      'Origin, X-Requested-With, Content-Type, Accept',
     );
     next();
   });
 };
+
 
 const allowStaticFilesServing = (app: Router) => {
   app.use(express.static(path.join('public')));
@@ -51,12 +55,13 @@ const createSocket = (server: Server) => require('socket.io')(server);
 
 const configureSocket = (io: Socket) => {
   appSocket = io;
+  stateService = new StateService();
 
   io.on('connection', (socket: Socket) => {
     logger.info('User connected to socket, %s', socket.id);
     socket.broadcast.emit('hi');
 
-    const commandHandler = new CommandHandler(socket, new DroneController());
+    new CommandHandler(socket, new DroneController(stateService), new VideoController());
 
     socket.on('disconnect', () => {
       logger.info('User disconnected from socket %s', socket.id);
@@ -88,8 +93,10 @@ const create = (port: number) => {
   server.listen(port, () => {
     logger.warn('The server is running on: http://localhost:%s ', port);
   });
+
+  createVideoStreamServer(getVideoForwardPort(), getVideoSocketPort());
 };
 
-export default create(APP_PORT);
+export default create(getAppPort());
 
 export {appSocket};

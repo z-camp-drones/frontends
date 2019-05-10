@@ -9,3 +9,26 @@ advanced-drone-control {
   bottom: 30px;
   left: 30px;
 }
+
+video-stream {
+  display: grid;
+  height: 100%;
+}
+
+app-command-log {
+  position: absolute;
+  left: 0;
+  top: 65px;
+}
+
+battery-status-component {
+  position: absolute;
+  left: 200px;
+  top: 65px;
+}
+
+telemetry-component {
+  position: absolute;
+  right: 10px;
+  top: 65px;
+}

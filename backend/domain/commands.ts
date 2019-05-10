@@ -5,8 +5,12 @@
  * Height describes the vertical height of the drone
  */
 export interface MovementCommand {
-  pitch: number;
-  roll: number;
-  yaw: number;
-  height: number;
+  pitch?: number;
+  roll?: number;
+  yaw?: number;
+  height?: number;
+}
+
+export interface FlipCommand {
+  direction: string;
 }

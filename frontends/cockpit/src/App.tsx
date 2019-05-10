@@ -1,60 +1,74 @@
-import React, { Component } from "react";
-import "./App.css";
-import CockpitHeader from "./header/CockpitHeader";
+import React, {Component} from 'react';
+import './App.css';
+import CockpitHeader from './header/CockpitHeader';
+import io from 'socket.io-client';
 
 declare global {
   namespace JSX {
-    interface BatteryComponentProps
-      extends React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      > {
+    interface DroneStatusComponentProps
+      extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>,
+        HTMLElement> {
       host: string;
     }
 
     interface IntrinsicElements {
-      "video-stream": React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      >;
-      "basic-drone-control": React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      >;
-      "advanced-drone-control": React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      >;
+      'video-stream': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>,
+        HTMLElement>;
+      'basic-drone-control': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>,
+        HTMLElement>;
+      'advanced-drone-control': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>,
+        HTMLElement>;
       "flight-recorder": React.DetailedHTMLProps<
         React.HTMLAttributes<HTMLElement>,
         HTMLElement
-      >;
-      "battery-status-component": BatteryComponentProps;
+        >;
+      'battery-status-component': DroneStatusComponentProps;
+      'telemetry-component': DroneStatusComponentProps;
     }
   }
 }
 
-interface IProps {}
+interface IProps {
+}
 
 interface IState {
   host: string;
+  connectedToDrone: boolean;
 }
 
 class App extends Component<IProps, IState> {
+
+  private readonly host = 'http://localhost:3001';
+  private readonly socket: SocketIOClient.Socket;
+
   constructor(props: IProps) {
     super(props);
-    this.state = { host: "http://localhost:3001" };
+    this.socket = io(this.host);
+
+    this.state = {
+      host: this.host,
+      connectedToDrone: false
+    };
+
+    this.socket.on('connection_successful', () => {
+      this.setState({connectedToDrone: true});
+    });
+
     this.handleHostChange = this.handleHostChange.bind(this);
+    this.onConnect = this.onConnect.bind(this);
   }
 
   handleHostChange(event: any) {
     if (event && event.target) {
-      console.log("value changed");
       this.setState({
         ...this.state,
-        host: event && event.target && event.target.value
+        host: event && event.target && event.target.value,
       });
     }
+  }
+
+  onConnect() {
+    this.socket.emit('init_connection', {});
   }
 
   render() {
@@ -62,13 +76,15 @@ class App extends Component<IProps, IState> {
       <div>
         <CockpitHeader
           host={this.state.host}
+          droneConnected={this.state.connectedToDrone}
           onHostChange={this.handleHostChange}
-        />
-        <video-stream />
-        <battery-status-component host={this.state.host} />
-        <basic-drone-control />
-        <flight-recorder/>
-        <advanced-drone-control />
+          onConnect={this.onConnect}></CockpitHeader>
+        <video-stream></video-stream>
+        <battery-status-component host={this.state.host}></battery-status-component>
+        <telemetry-component host={this.state.host}></telemetry-component>
+        <basic-drone-control></basic-drone-control>
+        <flight-recorder/><flight-recorder/>
+        <advanced-drone-control></advanced-drone-control>
       </div>
     );
   }

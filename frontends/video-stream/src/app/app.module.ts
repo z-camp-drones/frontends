@@ -1,24 +1,32 @@
-import { AppComponent } from './app.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Injector } from '@angular/core';
+import {AppComponent} from './app.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {Injector, NgModule} from '@angular/core';
 
-import { createCustomElement } from '@angular/elements';
+import {createCustomElement} from '@angular/elements';
+import {CommandLogComponent} from './command-log/command-log.component';
+import {VideoStreamComponent} from './video-stream/video-stream.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CommandLogComponent,
+    VideoStreamComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
   ],
   providers: [],
   entryComponents: [
-    AppComponent
+    AppComponent,
   ],
+  //bootstrap: [
+  //AppComponent,
+  //],
 })
 export class AppModule {
 
-  constructor(private injector: Injector) { }
+  constructor(private injector: Injector) {
+  }
 
   ngDoBootstrap() {
     // Convert `AppComponent` to a custom element.

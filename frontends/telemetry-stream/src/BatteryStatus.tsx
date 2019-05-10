@@ -1,8 +1,9 @@
-import React, { Component } from "react";
-import SingleValueTelemetry from "./SingleValueTelemetry";
-import TelemetryDto, { TemperatureDto } from "./telemetry/TelemetryDto";
-import TelemetryService from "./TelemetryService";
-import { Temperature } from "./Temperature";
+import React, {Component} from 'react';
+import SingleValueTelemetry from './SingleValueTelemetry';
+import TelemetryDto, {TemperatureDto} from './telemetry/TelemetryDto';
+import TelemetryService from './TelemetryService';
+import {Temperature} from './Temperature';
+import {BatteryControlBlockStyle} from './styles/BatteryControlBlockStyle';
 
 interface IProps {
   url: string | null;
@@ -22,14 +23,14 @@ export class BatteryStatus extends Component<IProps, IState> {
     this.state = {
       battery: 0,
       connectionError: false,
-      temperature: null
+      temperature: null,
     };
     this.service = new TelemetryService(this.props.url);
   }
 
   componentDidMount() {
     this.service.onTelemetetryReceived((droneStatus: TelemetryDto) =>
-      this.updateDroneState(droneStatus)
+      this.updateDroneState(droneStatus),
     );
   }
 
@@ -46,16 +47,16 @@ export class BatteryStatus extends Component<IProps, IState> {
     }
     if (this.state.battery) {
       return (
-        <div>
+        <BatteryControlBlockStyle>
           <SingleValueTelemetry
             value={this.state.battery}
             label="Battery"
             suffix="%"
           />
           {!this.state.temperature || (
-            <Temperature temperature={this.state.temperature} />
+            <Temperature temperature={this.state.temperature}/>
           )}
-        </div>
+        </BatteryControlBlockStyle>
       );
     }
   }
@@ -64,7 +65,7 @@ export class BatteryStatus extends Component<IProps, IState> {
     this.setState({
       battery: droneStatus.battery,
       connectionError: false,
-      temperature: droneStatus.temperature
+      temperature: droneStatus.temperature,
     });
   }
 }
