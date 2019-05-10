@@ -10,6 +10,12 @@ advanced-drone-control {
   left: 30px;
 }
 
+replay-control {
+  position: absolute;
+  bottom: 150px;
+  left: 30px;
+}
+
 video-stream {
   display: grid;
   height: 100%;
