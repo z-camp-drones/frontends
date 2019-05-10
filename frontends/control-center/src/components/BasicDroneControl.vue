@@ -50,7 +50,6 @@
     public created() {
       window.addEventListener('keydown', this.handleKeyDownEvent);
       window.addEventListener('keyup', this.handleKeyUpEvent);
-
       document.addEventListener('drone-speed-change-event', this.handleSpeedChangeEvent);
     }
 
@@ -80,7 +79,6 @@
     }
 
     private handleSpeedChangeEvent(event: CustomEvent) {
-      console.log('BasicDroneControl: new drone speed:', event.detail);
       this.droneController.sendSpeedChangeCommand(event.detail);
     }
 

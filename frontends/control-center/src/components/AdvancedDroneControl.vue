@@ -63,6 +63,7 @@
     public created() {
       window.addEventListener('keydown', this.handleKeyDownEvent);
       window.addEventListener('keyup', this.handleKeyUpEvent);
+      document.addEventListener('drone-speed-change-event', this.handleSpeedChangeEvent);
     }
 
     public beforeDestroy() {
@@ -73,7 +74,7 @@
     private handleKeyDownEvent(event: KeyboardEvent) {
       if (ALL_ALLOWED_ADVANCED_KEYS.includes(event.key)) {
         this.setControlState(event.keyCode, true);
-        this.sendMovementCommand(event.keyCode, 100);
+        this.sendMovementCommand(event.keyCode, this.droneController.getCurrentSpeed());
       }
     }
 
@@ -86,6 +87,10 @@
       } else if (EMERGENCY.keyCode === event.keyCode) {
         this.droneController.sendEmergencyCommand();
       }
+    }
+
+    private handleSpeedChangeEvent(event: CustomEvent) {
+      this.droneController.sendSpeedChangeCommand(event.detail);
     }
 
     private setControlState(keyCode: number, active: boolean) {
