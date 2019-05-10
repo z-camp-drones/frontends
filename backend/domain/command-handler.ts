@@ -4,6 +4,7 @@ import {CommandType} from '../communication/command-type';
 import {Response} from '../communication/response';
 import VideoController from './video-controller';
 import { MovementCommand, FlipCommand } from './commands';
+import logger from '../commons/logging/logger';
 
 interface RecordedCommand {
   timestamp: Date;
