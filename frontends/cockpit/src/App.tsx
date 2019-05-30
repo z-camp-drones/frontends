@@ -16,10 +16,9 @@ declare global {
     interface IntrinsicElements {
       'video-stream': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>,
         HTMLElement>;
-      'basic-drone-control': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>,
-        HTMLElement>;
-      'advanced-drone-control': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>,
-        HTMLElement>;
+      'replay-control': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+      'basic-drone-control': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+      'advanced-drone-control': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
       'battery-status-component': DroneStatusComponentProps;
       'telemetry-component': DroneStatusComponentProps;
     }
@@ -42,7 +41,7 @@ class App extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.socket = io(this.host);
-
+    console.log('\ns');
     this.state = {
       host: this.host,
       connectedToDrone: false,
@@ -93,6 +92,7 @@ class App extends Component<IProps, IState> {
           onHostChange={this.handleHostChange}
           onConnect={this.onConnect}></CockpitHeader>
         <video-stream></video-stream>
+        <replay-control></replay-control>
         <battery-status-component host={this.state.host}></battery-status-component>
         <telemetry-component host={this.state.host}></telemetry-component>
         <basic-drone-control></basic-drone-control>

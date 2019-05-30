@@ -6,6 +6,7 @@ WORKDIR /usr/src/app
 # Install app dependencies (moves package.json and package-lock.json into the Workdir)
 COPY package*.json ./
 
+
 RUN npm install
 
 COPY . .
